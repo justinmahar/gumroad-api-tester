@@ -13,6 +13,8 @@ import { CancelableFormControl } from '../widgets/CancelableFormControl';
 import { IconButton } from './IconButton';
 import { Param, RESTEndpoint, v2Api } from './v2api';
 import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
+import { FaPaste } from '@react-icons/all-files/fa/FaPaste';
+import { ImArrowRight } from '@react-icons/all-files/im/ImArrowRight';
 
 interface Props {}
 
@@ -177,6 +179,22 @@ export const GumroadAPIWidget = (props: Props) => {
     }
   }, [endpointUrl, method]);
 
+  const handlePasteAccessToken = () => {
+    const queryPermissions: any = { name: 'clipboard-read' };
+    navigator.permissions.query(queryPermissions).then((result) => {
+      // If permission to read the clipboard is granted or if the user will
+      // be prompted to allow it, we proceed.
+      if (result.state === 'granted' || result.state === 'prompt') {
+        navigator.clipboard
+          .readText()
+          .then((text) => {
+            setAccessToken(text);
+          })
+          .catch((e) => console.error(e));
+      }
+    });
+  };
+
   const updateUrlParamsForEndpointUrl = (newEndpointUrl: string) => {
     if (newEndpointUrl) {
       const urlParamMatches = newEndpointUrl.match(/[:]\w+/g);
@@ -327,42 +345,49 @@ export const GumroadAPIWidget = (props: Props) => {
         <div>
           <Form.Group controlId="access-token">
             <Form.Label>Access Token</Form.Label>
-            <CancelableFormControl
-              type="text"
-              placeholder="Paste access token here"
-              value={accessToken || ''}
-              required
-              onChange={(e) => {
-                setAccessToken(e.target.value);
-              }}
-              onCancel={() => {
-                setAccessToken('');
-              }}
-            />
+            <Stack direction="horizontal" gap={1}>
+              <CancelableFormControl
+                type="text"
+                placeholder="Paste access token here"
+                value={accessToken || ''}
+                inputStyle={{ background: !accessToken ? 'rgb(255, 230, 230)' : 'rgb(240, 240, 255)' }}
+                required
+                onChange={(e) => {
+                  setAccessToken(e.target.value);
+                }}
+                onCancel={() => {
+                  setAccessToken('');
+                }}
+              />
+              <IconButton icon={FaPaste} variant="secondary" onClick={handlePasteAccessToken} />
+            </Stack>
           </Form.Group>
         </div>
         <div>
           <Form.Group controlId="selected-endpoint">
             <Form.Label>Select An Endpoint (v2)</Form.Label>
-            <Form.Select
-              value={selectedEndpointIndex}
-              onChange={(e: any) => {
-                const parsedIndex = Number.parseInt(e.target.value);
-                if (!Number.isNaN(parsedIndex)) {
-                  setSelectedEndpointIndex(Number.isNaN(parsedIndex) ? -1 : parsedIndex);
-                  if (parsedIndex >= 0) {
-                    const newEndpoint = v2Api[parsedIndex];
-                    setEndpointUrl(newEndpoint.endpointUrl);
-                    setMethod(newEndpoint.method);
-                    setParams(newEndpoint.params);
-                    updateUrlParamsForEndpointUrl(newEndpoint.endpointUrl);
+            <div className="d-flex gap-1 align-items-center position-relative">
+              <ImArrowRight className="position-absolute text-info" style={{ left: -30 }} />
+              <Form.Select
+                value={selectedEndpointIndex}
+                onChange={(e: any) => {
+                  const parsedIndex = Number.parseInt(e.target.value);
+                  if (!Number.isNaN(parsedIndex)) {
+                    setSelectedEndpointIndex(Number.isNaN(parsedIndex) ? -1 : parsedIndex);
+                    if (parsedIndex >= 0) {
+                      const newEndpoint = v2Api[parsedIndex];
+                      setEndpointUrl(newEndpoint.endpointUrl);
+                      setMethod(newEndpoint.method);
+                      setParams(newEndpoint.params);
+                      updateUrlParamsForEndpointUrl(newEndpoint.endpointUrl);
+                    }
                   }
-                }
-              }}
-            >
-              <option value={-1}>Make a selection...</option>
-              {endpointOptionElements}
-            </Form.Select>
+                }}
+              >
+                <option value={-1}>Make a selection...</option>
+                {endpointOptionElements}
+              </Form.Select>
+            </div>
             {selectedEndpoint && (
               <Alert variant="info" className="mt-1 py-1">
                 {selectedEndpoint.description}
