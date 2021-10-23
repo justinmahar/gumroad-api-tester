@@ -6,12 +6,13 @@ import AccordionBody from 'react-bootstrap/esm/AccordionBody';
 import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 import AccordionItem from 'react-bootstrap/esm/AccordionItem';
 import ReactJson from 'react-json-view-ssr';
-import { useLocalStorageObject, useLocalStorageString } from 'react-use-window-localstorage';
+import { useLocalStorageBoolean, useLocalStorageObject, useLocalStorageString } from 'react-use-window-localstorage';
 import styled from 'styled-components';
 import { combineClassNames } from '../component-utils';
 import { CancelableFormControl } from '../widgets/CancelableFormControl';
 import { IconButton } from './IconButton';
 import { Param, RESTEndpoint, v2Api } from './v2api';
+import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
 
 interface Props {}
 
@@ -32,7 +33,8 @@ export const GumroadAPIWidget = (props: Props) => {
   const [wasSuccessful, setWasSuccessful] = React.useState<boolean | undefined>();
   const [selectedEndpointIndex, setSelectedEndpointIndex] = React.useState<number>(-1);
   const selectedEndpoint: RESTEndpoint | undefined =
-    selectedEndpointIndex >= 0 ? v2Api[selectedEndpointIndex] : undefined;
+    selectedEndpointIndex >= 0 && selectedEndpointIndex < v2Api.length ? v2Api[selectedEndpointIndex] : undefined;
+  const [showParams, setShowParams] = useLocalStorageBoolean('showParams', false);
 
   const [lastFetchMethod, setLastFetchMethod] = React.useState('');
   const [lastFetchUrl, setLastFetchUrl] = React.useState('');
@@ -115,6 +117,8 @@ export const GumroadAPIWidget = (props: Props) => {
               newWasSuccessful = true;
               if (typeof json.message === 'string') {
                 newSuccessMessage = json.message;
+              } else {
+                newSuccessMessage = 'Your request was successful.';
               }
             }
           } catch (e) {}
@@ -169,6 +173,7 @@ export const GumroadAPIWidget = (props: Props) => {
         return { k: param.k, v: prevApiParams.find((p) => p.k === param.k)?.v || '' };
       });
       setParams(paramArray);
+      setShowParams(paramArray.length > 0);
     }
   }, [endpointUrl, method]);
 
@@ -224,7 +229,11 @@ export const GumroadAPIWidget = (props: Props) => {
           placeholder="Enter key name"
           value={params[index].k}
           inputStyle={
-            params[index].k.length > 0 && params[index].v.length > 0 ? { background: 'rgb(240, 240, 255)' } : undefined
+            params[index].k.length > 0 && params[index].v.length > 0
+              ? { background: 'rgb(240, 240, 255)' }
+              : params[index].k.length > 0 && params[index].v.length === 0
+              ? { background: 'rgb(255, 255, 240)' }
+              : undefined
           }
           onChange={(e) => {
             const newParams = [...params];
@@ -243,7 +252,11 @@ export const GumroadAPIWidget = (props: Props) => {
           placeholder="Enter value"
           value={params[index].v}
           inputStyle={
-            params[index].k.length > 0 && params[index].v.length > 0 ? { background: 'rgb(240, 240, 255)' } : undefined
+            params[index].k.length > 0 && params[index].v.length > 0
+              ? { background: 'rgb(240, 240, 255)' }
+              : params[index].k.length > 0 && params[index].v.length === 0
+              ? { background: 'rgb(255, 255, 240)' }
+              : undefined
           }
           onChange={(e) => {
             const newParams = [...params];
@@ -436,47 +449,55 @@ export const GumroadAPIWidget = (props: Props) => {
             </AccordionBody>
           </AccordionItem>
         </Accordion>
-        <Card>
-          <Card.Header>Params</Card.Header>
-          <Card.Body>
-            <Stack gap={1}>
-              <Stack gap={1}>{apiParamElements}</Stack>
-              <div
-                className={combineClassNames(
-                  'd-flex gap-1',
-                  params.length > 0 ? 'justify-content-end' : 'justify-content-center',
-                )}
-              >
-                <IconButton
-                  icon={FaPlus}
-                  variant="primary"
-                  onClick={() => {
-                    setParams([...params, { k: '', v: '' }]);
-                  }}
+        <Accordion activeKey={showParams ? '0' : 'none'}>
+          <AccordionItem eventKey="0">
+            <AccordionHeader onClick={() => setShowParams(!showParams)}>
+              <Stack direction="horizontal" gap={2}>
+                <div className="text-dark">Params</div>
+              </Stack>
+            </AccordionHeader>
+            <AccordionBody>
+              <Stack gap={1}>
+                <Stack gap={1}>{apiParamElements}</Stack>
+                <div
+                  className={combineClassNames(
+                    'd-flex gap-1',
+                    params.length > 0 ? 'justify-content-end' : 'justify-content-center',
+                  )}
                 >
-                  Add Param
-                </IconButton>
-                {params.length > 0 && (
-                  <Button
-                    variant="danger"
+                  <IconButton
+                    icon={FaPlus}
+                    variant="primary"
                     onClick={() => {
-                      setParams([]);
+                      setParams([...params, { k: '', v: '' }]);
                     }}
                   >
-                    Delete All
-                  </Button>
+                    Add Param
+                  </IconButton>
+                  {params.length > 0 && (
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        setParams([]);
+                      }}
+                    >
+                      Delete All
+                    </Button>
+                  )}
+                </div>
+                {showEmptyParamsAlert && (
+                  <Alert variant="info" className="py-1 my-2 small">
+                    Refer to the{' '}
+                    <a href="https://app.gumroad.com/api" target="_blank" rel="noopener noreferrer">
+                      docs <FaExternalLinkAlt style={{ fontSize: '80%' }} />
+                    </a>{' '}
+                    for param specifications. Some params are optional. Empty params will not be sent.
+                  </Alert>
                 )}
-              </div>
-              {showEmptyParamsAlert && (
-                <Alert variant="info" className="py-1 my-2 small">
-                  Refer to the <a href="https://app.gumroad.com/api">docs</a> for param specifications. Some params are
-                  optional. Empty params will not be sent.
-                </Alert>
-              )}
-            </Stack>
-          </Card.Body>
-        </Card>
-
+              </Stack>
+            </AccordionBody>
+          </AccordionItem>
+        </Accordion>
         <div className="d-flex justify-content-end align-items-center gap-2">
           {typeof wasSuccessful === 'boolean' && !wasSuccessful && <Badge bg="danger">Error</Badge>}
           {typeof wasSuccessful === 'boolean' && wasSuccessful && <Badge bg="success">Success</Badge>}
@@ -489,18 +510,18 @@ export const GumroadAPIWidget = (props: Props) => {
           </Button>
         </div>
         {errorMessage && (
-          <div>
+          <FadeInQuick key={`error-alert-${fetchTime}`}>
             <Alert variant="danger">
               <p className="mb-0">{errorMessage}</p>
             </Alert>
-          </div>
+          </FadeInQuick>
         )}
         {successMessage && (
-          <div>
+          <FadeInQuick key={`success-alert-${fetchTime}`}>
             <Alert variant="success">
               <p className="mb-0">{successMessage}</p>
             </Alert>
-          </div>
+          </FadeInQuick>
         )}
         {lastFetchMethod && lastFetchUrl && (
           <FadeInQuick key={`request-${fetchTime}`}>
