@@ -1,3 +1,4 @@
+import { Modal } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
 import { AiOutlineApi } from '@react-icons/all-files/ai/AiOutlineApi';
@@ -43,6 +44,7 @@ export const GumroadAPIWidget = (props: Props) => {
   const [lastFetchUrl, setLastFetchUrl] = React.useState('');
 
   const [pastedAccessToken, setPastedAccessToken] = React.useState('');
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = React.useState(false);
 
   let statusLabel = `${status}`;
   switch (status) {
@@ -329,9 +331,38 @@ export const GumroadAPIWidget = (props: Props) => {
     <Form
       onSubmit={(e) => {
         e.preventDefault();
-        handleSend();
+        if (method === 'DELETE') {
+          setShowConfirmDeleteModal(true);
+        } else {
+          handleSend();
+        }
       }}
     >
+      <Modal centered show={showConfirmDeleteModal} onHide={() => setShowConfirmDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="fw-bold fs-5">Are you sure you want to delete the resource?</p>
+          <p>
+            Endpoint: <code className="px-1 border border-light rounded-2">{endpointUrl}</code>
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setShowConfirmDeleteModal(false);
+              handleSend();
+            }}
+          >
+            Delete
+          </Button>
+          <Button variant="secondary" onClick={() => setShowConfirmDeleteModal(false)}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Stack gap={2}>
         <div>
           <Form.Group controlId="api-root-url">
