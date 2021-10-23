@@ -125,6 +125,9 @@ export const GumroadAPIWidget = (props: Props) => {
               } else {
                 newSuccessMessage = 'Your request was successful.';
               }
+            } else if (typeof json.error === 'string') {
+              newErrorMessage = json.error;
+              newWasSuccessful = false;
             }
           } catch (e) {}
           setErrorMessage(newErrorMessage);
