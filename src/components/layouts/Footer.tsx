@@ -44,6 +44,7 @@ export default function Footer(props: FooterProps): JSX.Element {
                     <BuildStatusBadge
                       href="https://github.com/justinmahar/gumroad-api-tester-webapp/actions?query=workflow%3ADeploy"
                       src="https://github.com/justinmahar/gumroad-api-tester-webapp/workflows/Deploy/badge.svg"
+                      reloadDisabled
                     />
                   </div>
                 </Nav>
