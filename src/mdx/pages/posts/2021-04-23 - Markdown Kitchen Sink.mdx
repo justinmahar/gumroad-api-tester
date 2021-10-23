@@ -1,0 +1,177 @@
+---
+title: Markdown Kitchen Sink
+group: posts
+date: 2021-04-23
+---
+
+import { Button, Spinner } from 'react-bootstrap';
+
+Below, all markdown elements are present.
+
+This page can be used to preview and customize how markdown is rendered by `MdxNodeRenderer`.
+
+It can also be used as a quick markdown cheat sheet.
+
+See the [README](https://github.com/justinmahar/gatsby-starter-mdx-launchpad#customizing-rendered-markdown) for more rendering information.
+
+---
+
+# h1: Heading 1 `#`
+
+## h2: Heading 2 `##`
+
+### h3: Heading 3 `###`
+
+#### h4: Heading 4 `####`
+
+##### h5: Heading 5 `#####`
+
+###### h6: Heading 6 `######`
+
+p: Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id ligula ac ligula vulputate luctus sit amet ac ante. Duis iaculis elit vel neque elementum molestie. Praesent eleifend lacinia tellus et bibendum. Vivamus lobortis diam sit amet libero tincidunt, nec consectetur enim tincidunt. Phasellus erat magna, sollicitudin sed eros ut, convallis commodo neque.
+
+p: Paragraph. Morbi mattis sapien nulla. Cras pellentesque neque eu sapien tempor, a porta justo sagittis. Donec libero est, malesuada efficitur erat sit amet, aliquam consectetur nibh. Nulla ultrices convallis viverra. Maecenas consequat sem molestie orci posuere, ac dignissim nisi varius. In tincidunt dui sit amet neque gravida mollis. Maecenas volutpat velit ex, vitae eleifend massa rutrum a. Sed elit nulla, mollis quis dictum ac, faucibus id augue.
+
+> blockquote: Blockquote (`>`). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+> Sed id ligula ac ligula vulputate luctus sit amet ac ante. Duis iaculis elit vel neque elementum molestie.
+> Praesent eleifend lacinia tellus et bibendum. Vivamus lobortis diam sit amet libero tincidunt, nec consectetur enim tincidunt.
+> Phasellus erat magna, sollicitudin sed eros ut, convallis commodo neque.
+
+<blockquote>
+  <p>Multiple paragraphs in a blockquote</p>
+  <p>Multiple paragraphs in a blockquote</p>
+  <p>Multiple paragraphs in a blockquote</p>
+</blockquote>
+
+#### ul: Unordered List `-`
+
+- li: List Item
+- li: List Item
+- li: List Item
+
+#### ol: Ordered list `1.`
+
+1. li: List Item
+1. li: List Item
+1. li: List Item
+
+#### table: Table
+
+| thead/tr/th: Table Head/Table Row/Table Header | th: Table Header | th: Table Header | th: Table Header |
+| ---------------------------------------------- | ---------------- | ---------------- | ---------------- |
+| tbody/tr/td: Table Body/Table Row/Table Cell   | td: Table Cell   | td: Table Cell   | td: Table Cell   |
+| tr/td: Table Row/Table Cell                    | td: Table Cell   | td: Table Cell   | td: Table Cell   |
+| tr/td: Table Row/Table Cell                    | td: Table Cell   | td: Table Cell   | td: Table Cell   |
+| tr/td: Table Row/Table Cell                    | td: Table Cell   | td: Table Cell   | td: Table Cell   |
+| tr/td: Table Row/Table Cell                    | td: Table Cell   | td: Table Cell   | td: Table Cell   |
+
+#### Code Blocks
+
+```
+code: Code
+pre: Code
+```
+
+```js
+let code = 'JavaScript code';
+```
+
+```js
+const longText =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id ligula ac ligula vulputate luctus sit amet ac ante. Duis iaculis elit vel neque elementum molestie. Praesent eleifend lacinia tellus et bibendum. Vivamus lobortis diam sit amet libero tincidunt, nec consectetur enim tincidunt. Phasellus erat magna, sollicitudin sed eros ut, convallis commodo neque. Morbi mattis sapien nulla. Cras pellentesque neque eu sapien tempor, a porta justo sagittis. Donec libero est, malesuada efficitur erat sit amet, aliquam consectetur nibh. Nulla ultrices convallis viverra. Maecenas consequat sem molestie orci posuere, ac dignissim nisi varius. In tincidunt dui sit amet neque gravida mollis. Maecenas volutpat velit ex, vitae eleifend massa rutrum a. Sed elit nulla, mollis quis dictum ac, faucibus id augue.';
+
+const evenLongerText =
+  'Fusce dapibus, eros nec dapibus maximus, metus nisl cursus enim, eget malesuada dui ante id libero. Nam porta enim a orci laoreet viverra. Proin quam enim, ullamcorper sed sem eget, volutpat faucibus ipsum. Ut iaculis eget leo et aliquet. Nunc fermentum bibendum dictum. Proin sagittis feugiat neque id volutpat. Nam in ullamcorper dolor, sed iaculis justo. Sed imperdiet erat ut nunc semper, ac maximus sapien varius. In vel pulvinar nisl, non tincidunt diam. Sed mattis ullamcorper enim quis faucibus. Phasellus eu rutrum nulla, eget volutpat nunc. Nam congue vestibulum orci, varius consequat mi facilisis id. Vivamus posuere urna tempus gravida malesuada. Cras non interdum eros. Vestibulum vel tortor velit. Aenean pretium, nulla sit amet congue lacinia, dolor quam porttitor enim, eget placerat magna risus at ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed semper tempus massa. Maecenas porta nisl odio, vel dapibus ex ultrices et. Morbi vitae nisl a nulla rutrum euismod. Vestibulum posuere commodo imperdiet.';
+```
+
+<br />
+
+#### Inline Code
+
+`inlineCode: Inline Code`
+
+`js:::let code = 'Inline JavaScript code';`
+
+<br />
+
+#### Formatting
+
+_em: Emphasis_ `_` `*`
+
+**strong: Strong** `__` `**`
+
+~~del: Delete/Strikethrough~~ `~~`
+
+<br />
+
+#### hr: Thematic break
+
+`---` `***`
+
+---
+
+[a: Link](/markdown-kitchen-sink) `[text](link)`
+
+#### img: Image
+
+![kittens](/media/site-image.jpg)
+
+`![alt](link)`
+
+#### Paragraph Containing All Inline Markdown
+
+This is a paragraph with some _Emphasis_ text. It also contains **Strong** text, as well as ~~Strikethrough~~ text. Following that, we also have some plain text `Inline Code` as well as the code `js:::let code = 'Inline JavaScript code';`, which is highlighted as JavaScript!
+
+#### Template Text Short Code
+
+The following uses the `TemplateText` short code to reference the site name (from `settings.yml`) and the content title of this post using [template tags](https://github.com/justinmahar/gatsby-starter-mdx-launchpad#template-tags):
+
+> <TemplateText text="You're reading the post called {contentTitle} and the site name is {siteName}." />
+
+```jsx
+<TemplateText text="You're reading the post called {contentTitle} and the site name is {siteName}." />
+```
+
+<br />
+
+#### React Components
+
+Since this is an MDX page, you can use components right in your markdown!
+
+At a minimum, this means we can use Gatsby's blazing fast Link component in our markdown, which is automatically imported as a [short code](https://github.com/justinmahar/gatsby-starter-mdx-launchpad#adding-component-short-codes). 🙌
+
+Sky's the limit beyond that.
+
+##### Examples
+
+---
+
+Blazing fast Gatsby Link: <Link to="/">Home 🔥</Link>
+
+```md
+Blazing fast Gatsby Link: <Link to="/">Home 🔥</Link>
+```
+
+---
+
+Spinner:
+
+<Spinner animation="border" />
+
+```md
+import { Spinner } from 'react-bootstrap';
+
+Spinner:
+
+<Spinner animation="border" />
+```
+
+---
+
+Button: <Button size="sm" variant="primary" onClick={() => alert("I've been pressed!")}>Press Me!</Button>
+
+```md
+import { Button } from 'react-bootstrap';
+
+Button: <Button size="sm" variant="primary" onClick={() => alert("I've been pressed!")}>Press Me!</Button>
+```

@@ -1,0 +1,35 @@
+---
+title: Frontmatter Specs
+slug: frontmatter-specs
+excerpt: none
+seo:
+  title: none
+  description: none
+  imageUrl: none
+  imageWidth: 1200
+  imageHeight: 630
+  imageAlt: none
+partial: true
+private: false
+category: none
+group: none
+date: 1970-01-01
+---
+
+**Important: Be sure to add all new frontmatter specs to this file and `src/data/MdxContent.ts`.**
+
+This file has all frontmatter fields defined so that their types can be inferred by Gatsby's GraphQL system.
+
+This file also makes all frontmatter in MDX files optional except for `title`.
+
+This MDX file is set as a partial, so it will not be generated as a page.
+
+In any MDX file except this one:
+
+- All fields except `title` are optional.
+- Anything not specified, or set to `none`, is ignored.
+- When not specified, slugs are created from titles. They are stripped of stop words, made lowercase, and all non-alphanumerics are converted to dashes.
+- `partial` - Set to `true` to make MDX into a partial. No page will be created by Gatsby, and it can be included on any page using the `MdxPartial` component.
+- `private` - Set to `true` to make MDX page private. It will not be included in `sitemap.xml` and its path will be prefixed with the `privatePagePathPrefix` value defined in `src/settings/settings.yml`.
+
+See the [MDX Launchpad README](https://github.com/justinmahar/gatsby-starter-mdx-launchpad#included-frontmatter) for more information on frontmatter.

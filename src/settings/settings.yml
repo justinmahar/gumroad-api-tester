@@ -1,0 +1,27 @@
+siteMetadata:
+  siteName: MDX Launchpad
+  siteUrl: 'https://gatsby-starter-mdx-launchpad.netlify.app'
+  siteDescription: Lightweight Gatsby starter supporting TypeScript, and MDX. Start lightyears ahead!
+  siteIcon: /media/site-icon.png
+  siteIconAlt: Rocketship blasting off
+  siteImage: '{siteUrl}/media/site-image.jpg'
+  siteImageWidth: 1200
+  siteImageHeight: 630
+  siteImageAlt: Kittens
+gatsbyPluginManifestOptions:
+  name: MDX Launchpad
+  shortName: launchpad
+  startUrl: /
+  themeColor: '#1167b1'
+  backgroundColor: '#03254c'
+  display: standalone
+  customIcon: none # '/media/pwa-icon.png'
+seoTitleFormat: '{contentTitle}{seoTitleSeparator}{siteName}' # See README for all template tags
+seoTitleSeparator: ' - '
+privatePagePathPrefix: private # Must not start or end with a slash
+googleAnalyticsMeasurementId: none
+twitterSiteUsername: none
+redirects: # https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
+  - fromPath: /old-url
+    toPath: /new-url
+    isPermanent: true
