@@ -4,7 +4,7 @@ siteMetadata:
   siteDescription: A webapp for easily testing the Gumroad API.
   siteIcon: /media/site-icon.png
   siteIconAlt: Cyclone
-  siteImage: '{siteUrl}/media/site-image.png'
+  siteImage: '{siteUrl}/media/site-image.jpg'
   siteImageWidth: 1200
   siteImageHeight: 600
   siteImageAlt: Repository information for project
