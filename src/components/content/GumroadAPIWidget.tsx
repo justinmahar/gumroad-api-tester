@@ -1,21 +1,18 @@
+import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
+import { FaPaste } from '@react-icons/all-files/fa/FaPaste';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import { FaTrashAlt } from '@react-icons/all-files/fa/FaTrashAlt';
+import { ImArrowRight } from '@react-icons/all-files/im/ImArrowRight';
 import React from 'react';
-import { Accordion, Alert, Badge, Button, ButtonGroup, Card, Form, Stack } from 'react-bootstrap';
-import AccordionBody from 'react-bootstrap/esm/AccordionBody';
-import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
-import AccordionItem from 'react-bootstrap/esm/AccordionItem';
+import { Accordion, Alert, Badge, Button, ButtonGroup, Form, Stack } from 'react-bootstrap';
 import ReactJson from 'react-json-view-ssr';
 import { useLocalStorageBoolean, useLocalStorageObject, useLocalStorageString } from 'react-use-window-localstorage';
 import styled from 'styled-components';
 import { combineClassNames } from '../component-utils';
 import { CancelableFormControl } from '../widgets/CancelableFormControl';
+import { ContextualResults } from './ContextualResults';
 import { IconButton } from './IconButton';
 import { Param, RESTEndpoint, v2Api } from './v2api';
-import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
-import { FaPaste } from '@react-icons/all-files/fa/FaPaste';
-import { ImArrowRight } from '@react-icons/all-files/im/ImArrowRight';
-import { ContextualResults } from './ContextualResults';
 
 interface Props {}
 
@@ -427,8 +424,8 @@ export const GumroadAPIWidget = (props: Props) => {
           <Stack gap={1}>{urlParamElements}</Stack>
         </Stack>
         <Accordion>
-          <AccordionItem eventKey="0">
-            <AccordionHeader>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
               <Stack direction="horizontal" gap={2}>
                 <div className="text-dark">Method</div>
                 <div>
@@ -437,8 +434,8 @@ export const GumroadAPIWidget = (props: Props) => {
                   </Badge>
                 </div>
               </Stack>
-            </AccordionHeader>
-            <AccordionBody>
+            </Accordion.Header>
+            <Accordion.Body>
               <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
                 <ButtonGroup>
                   <Button
@@ -481,17 +478,17 @@ export const GumroadAPIWidget = (props: Props) => {
                   onCancel={() => setMethod('')}
                 />
               </div>
-            </AccordionBody>
-          </AccordionItem>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
         <Accordion activeKey={showParams ? '0' : 'none'}>
-          <AccordionItem eventKey="0">
-            <AccordionHeader onClick={() => setShowParams(!showParams)}>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header onClick={() => setShowParams(!showParams)}>
               <Stack direction="horizontal" gap={2}>
                 <div className="text-dark">Params</div>
               </Stack>
-            </AccordionHeader>
-            <AccordionBody>
+            </Accordion.Header>
+            <Accordion.Body>
               <Stack gap={1}>
                 <Stack gap={1}>{apiParamElements}</Stack>
                 <div
@@ -530,8 +527,8 @@ export const GumroadAPIWidget = (props: Props) => {
                   </Alert>
                 )}
               </Stack>
-            </AccordionBody>
-          </AccordionItem>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
         <div className="d-flex justify-content-end align-items-center gap-2">
           {typeof wasSuccessful === 'boolean' && !wasSuccessful && <Badge bg="danger">Error</Badge>}
