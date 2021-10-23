@@ -1,4 +1,5 @@
 import { FaTrashAlt } from '@react-icons/all-files/fa/FaTrashAlt';
+import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import React from 'react';
 import { Alert, Badge, Button, ButtonGroup, Card, Form, Stack } from 'react-bootstrap';
 import ReactJson from 'react-json-view-ssr';
@@ -364,12 +365,13 @@ export const GumroadAPIWidget = (props: Props) => {
                 POST
               </Button>
             </ButtonGroup>
-            <Form.Control
+            <CancelableFormControl
               type="text"
               placeholder="GET, DELETE, PUT, POST, etc."
-              onChange={(e) => setMethod(e.target.value)}
               value={method || ''}
               className="font-monospace"
+              onChange={(e) => setMethod(e.target.value)}
+              onCancel={() => setMethod('')}
             />
           </div>
         </Card.Body>
@@ -380,14 +382,15 @@ export const GumroadAPIWidget = (props: Props) => {
           <Stack gap={1}>
             <Stack gap={1}>{apiParamElements}</Stack>
             <div className={combineClassNames('d-flex gap-1', params.length > 0 ? 'justify-content-end' : undefined)}>
-              <Button
+              <IconButton
+                icon={FaPlus}
                 variant="primary"
                 onClick={() => {
                   setParams([...params, { k: '', v: '' }]);
                 }}
               >
-                + Add Param
-              </Button>
+                Add Param
+              </IconButton>
               <Button
                 variant="danger"
                 onClick={() => {

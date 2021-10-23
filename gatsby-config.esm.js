@@ -145,4 +145,5 @@ export default {
     ...settings.siteMetadata,
   },
   plugins: plugins,
+  pathPrefix: '/gumroad-api-tester-webapp',
 };

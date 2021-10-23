@@ -95,6 +95,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "build-deploy": "gatsby build --prefix-paths",
     "clean": "rm -rf .cache && rm -rf public",
     "start": "npm run develop",
     "serve": "gatsby serve",
