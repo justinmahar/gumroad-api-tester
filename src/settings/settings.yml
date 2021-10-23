@@ -19,7 +19,7 @@ gatsbyPluginManifestOptions:
 seoTitleFormat: '{contentTitle}{seoTitleSeparator}{siteName}' # See README for all template tags
 seoTitleSeparator: ' - '
 privatePagePathPrefix: private # Must not start or end with a slash
-googleAnalyticsMeasurementId: none
+googleAnalyticsMeasurementId: G-7CSLMYXR8Z
 twitterSiteUsername: none
 redirects: # https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
   - fromPath: /old-url
