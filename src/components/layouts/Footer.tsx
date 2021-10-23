@@ -41,10 +41,10 @@ export default function Footer(props: FooterProps): JSX.Element {
                 </Nav>
                 <Nav>
                   <div className="nav-link" role="button">
-                    <BuildStatusBadge>
-                      [![Netlify
-                      Status](https://api.netlify.com/api/v1/badges/21f52584-91b7-4198-8ac7-827357fef04f/deploy-status)](https://app.netlify.com/sites/gatsby-starter-mdx-launchpad/deploys)
-                    </BuildStatusBadge>
+                    <BuildStatusBadge
+                      href="https://github.com/justinmahar/gumroad-api-tester-webapp/actions?query=workflow%3ADeploy"
+                      src="https://github.com/justinmahar/gumroad-api-tester-webapp/workflows/Deploy/badge.svg"
+                    />
                   </div>
                 </Nav>
               </div>
