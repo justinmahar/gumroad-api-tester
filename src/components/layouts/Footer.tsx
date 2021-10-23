@@ -23,6 +23,13 @@ export default function Footer(props: FooterProps): JSX.Element {
                 <a href="https://github.com/justinmahar/" className="text-reset">
                   Justin Mahar
                 </a>
+                .{' '}
+                <a
+                  href="https://raw.githubusercontent.com/justinmahar/gumroad-api-tester-webapp/master/LICENSE"
+                  className="text-reset"
+                >
+                  MIT License
+                </a>
                 . Logo by{' '}
                 <a
                   href="https://twemoji.twitter.com/"
