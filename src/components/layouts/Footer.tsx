@@ -5,6 +5,7 @@ import { BuildStatusBadge } from 'react-build-status-badge';
 import styled from 'styled-components';
 import { TemplateTagRenderer } from '../../data/TemplateTagRenderer';
 import Settings, { useSettings } from '../../settings/useSettings';
+import { FaGithub } from '@react-icons/all-files/fa/FaGithub';
 
 export interface FooterProps {}
 
@@ -17,9 +18,8 @@ export default function Footer(props: FooterProps): JSX.Element {
         <Row>
           <Col>
             <div className="d-flex flex-column justify-content-center">
-              <div className="text-center text-white mt-6 mb-4">
-                Copyright &copy; {templateTagRenderer.render('{year}')}, {templateTagRenderer.render('{siteName}')}.
-                Logo by{' '}
+              <div className="text-center text-white mt-6 mb-2">
+                Copyright &copy; {templateTagRenderer.render('{year}')} Justin Mahar. Logo by{' '}
                 <a
                   href="https://twemoji.twitter.com/"
                   target="_blank"
@@ -30,20 +30,13 @@ export default function Footer(props: FooterProps): JSX.Element {
                 </a>
                 .
               </div>
-              <div className="d-flex flex-wrap justify-content-center">
+              <div className="d-flex flex-wrap justify-content-center align-items-center">
                 <Nav>
-                  <Link className="nav-link text-white font-weight-bold" role="button" to="/terms">
-                    Terms
-                  </Link>
-                </Nav>
-                <Nav>
-                  <Link className="nav-link text-white font-weight-bold" role="button" to="/privacy">
-                    Privacy
-                  </Link>
-                </Nav>
-                <Nav>
-                  <a className="nav-link text-white font-weight-bold" role="button" href="/sitemap.xml">
-                    Sitemap
+                  <a
+                    className="nav-link text-white fw-bold fs-3"
+                    href="https://github.com/justinmahar/gumroad-api-tester-webapp"
+                  >
+                    <FaGithub />
                   </a>
                 </Nav>
                 <Nav>
@@ -64,7 +57,7 @@ export default function Footer(props: FooterProps): JSX.Element {
 }
 
 const FooterDiv = styled.div`
-  padding-top: 8em;
-  padding-bottom: 8em;
+  padding-top: 3em;
+  padding-bottom: 3em;
   background-color: #202020;
 `;

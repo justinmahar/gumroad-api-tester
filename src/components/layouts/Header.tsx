@@ -2,6 +2,7 @@ import { Link } from 'gatsby';
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import Settings, { useSettings } from '../../settings/useSettings';
+import { Fork, Star } from 'react-github-buttons';
 
 export interface HeaderProps {}
 
@@ -12,7 +13,7 @@ export default function Header(_props: HeaderProps): JSX.Element {
       <Container>
         <Link to="/" className={'navbar-brand'}>
           <div className="d-flex flex-row">
-            <div className="d-flex align-items-center mr-2">
+            <div className="d-flex align-items-center me-2">
               <img
                 src={settings.data.site.siteMetadata.siteIcon}
                 alt={settings.data.site.siteMetadata.siteIconAlt}
@@ -26,16 +27,14 @@ export default function Header(_props: HeaderProps): JSX.Element {
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto"></Nav>
-          <Nav>
-            <Link to="/about" className="nav-link" role="button">
-              About
-            </Link>
-          </Nav>
-          <Nav>
-            <Link to="/contact" className="nav-link" role="button">
-              Contact
-            </Link>
+          <Nav className="mx-auto"></Nav>
+          <Nav className="d-flex align-items-center">
+            <a href="https://github.com/justinmahar/gumroad-api-tester-webapp/fork">
+              <Fork owner="justinmahar" repo="gumroad-api-tester-webapp" />
+            </a>
+            <a href="https://github.com/justinmahar/gumroad-api-tester-webapp/stargazers">
+              <Star owner="justinmahar" repo="gumroad-api-tester-webapp" />
+            </a>
           </Nav>
         </Navbar.Collapse>
       </Container>

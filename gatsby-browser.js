@@ -30,6 +30,8 @@
 
 // == Bootstrap Base ==
 require('bootstrap/dist/css/bootstrap.min.css');
+// == Bootswatch ==
+require('bootswatch/dist/zephyr/bootstrap.min.css');
 
 // == PrismJS code syntax highlighting themes ==
 require('prismjs/themes/prism.css');

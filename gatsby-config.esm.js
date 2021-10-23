@@ -98,33 +98,6 @@ const plugins = [
   `gatsby-plugin-typescript`,
   `gatsby-plugin-typescript-checker`,
   `gatsby-plugin-sass`,
-  {
-    resolve: `gatsby-plugin-mdx`,
-    options: {
-      gatsbyRemarkPlugins: [
-        {
-          // For line numbering/highlights and more, see:
-          // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs
-          resolve: 'gatsby-remark-prismjs',
-          options: {
-            classPrefix: 'language-',
-            // Use this string to denote which language to use in inline code blocks.
-            // Example: `js:::let finalBoss = "Bowser"`
-            // The js::: part is removed and everything after it is highlighted as js.
-            inlineCodeMarker: ':::',
-            aliases: {},
-          },
-        },
-      ],
-    },
-  },
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `mdx-source`,
-      path: `${__dirname}/src/mdx`,
-    },
-  },
   `gatsby-transformer-yaml`,
   {
     resolve: `gatsby-source-filesystem`,

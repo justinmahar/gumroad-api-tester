@@ -1,52 +1,67 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
-import moment from 'moment';
 import React from 'react';
-import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
+import { GumroadAPIWidget } from '../components/content/GumroadAPIWidget';
+import { IconButton } from '../components/content/IconButton';
 import Body from '../components/layouts/Body';
 import Head from '../components/layouts/Head';
 import Layout from '../components/layouts/Layout';
-import MdxContent, { MdxNode } from '../data/MdxContent';
+import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
+import { Alert } from 'react-bootstrap';
 
 interface IndexProps {
   data: any;
 }
 
 export default function Index(props: IndexProps): JSX.Element {
-  const postsData = useStaticQuery(graphql`
-    query IndexQuery {
-      posts: allMdx(
-        filter: { frontmatter: { partial: { ne: true }, private: { ne: true }, group: { eq: "posts" } } }
-        sort: { fields: frontmatter___date, order: DESC }
-      ) {
-        nodes {
-          ...mdxContent
-        }
-      }
-    }
-  `);
-
   const pageTitle = `{siteName}`;
   const description = `{siteDescription}`;
 
-  const postNodes: MdxNode[] = postsData?.posts?.nodes ? postsData.posts.nodes : [];
-
-  const postElements = postNodes.map((node: MdxNode) => {
-    return (
-      <div className="mb-4" key={node.id}>
-        <MdxPostCard mdxNode={node} />
-      </div>
-    );
-  });
+  const [showInformationModal, setShowInformationModal] = React.useState(true);
+  const handleCloseInformationModal = () => setShowInformationModal(false);
 
   return (
     <Layout>
       <Head seo={{ title: pageTitle, description: description }} />
       <Body>
         <Container>
+          <Row className="mb-5">
+            <Col md={{ offset: 1, span: 10 }} lg={{ offset: 3, span: 6 }}>
+              <div className="d-flex align-items-center justify-content-between mb-3">
+                <h4>Gumroad API Tester</h4>
+                <div>
+                  <a href="https://app.gumroad.com/api" target="_blank" rel="noopener noreferrer">
+                    <IconButton variant="secondary" size="sm" icon={FaExternalLinkAlt} end>
+                      Gumroad API Documentation
+                    </IconButton>
+                  </a>
+                </div>
+              </div>
+              {showInformationModal && (
+                <Alert variant="info" dismissible className="mb-3" onClose={handleCloseInformationModal}>
+                  <h6>Welcome!</h6>
+                  <p>
+                    Below you can test out the <a href="https://app.gumroad.com/api">Gumroad API</a> using your{' '}
+                    <a href="https://app.gumroad.com/settings/advanced#application-form">access token</a>. This tool can
+                    also be helpful if you need to make changes not supported via the website, such as adding resource
+                    subscriptions.
+                  </p>
+                  <p>
+                    All v2 endpoints are available for quick selection, or you can manually enter things if you'd like.
+                    Some parameters are optional&mdash;be sure to reference the{' '}
+                    <a href="https://app.gumroad.com/api">API docs</a> when in doubt.
+                  </p>
+                </Alert>
+              )}
+              <GumroadAPIWidget />
+            </Col>
+          </Row>
           <Row>
             <Col>
-              <h2 className="mb-4">Posts</h2>
-              {postElements}
+              <h4 className="text-center text-muted">
+                If this project helped you, please{' '}
+                <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">Star it on GitHub</a> so others can
+                find it. :)
+              </h4>
             </Col>
           </Row>
         </Container>
@@ -54,35 +69,3 @@ export default function Index(props: IndexProps): JSX.Element {
     </Layout>
   );
 }
-
-interface MdxPostCardProps {
-  mdxNode: MdxNode;
-}
-
-const MdxPostCard = (props: MdxPostCardProps) => {
-  const mdxContent: MdxContent = new MdxContent(props.mdxNode);
-  const date = moment(mdxContent.node.frontmatter.date);
-  const dateString = date.utc().format('MMMM Do, YYYY');
-  return (
-    <Card>
-      <Card.Header className="d-flex justify-content-between">
-        <h4>
-          <Link to={mdxContent.node.fields.slug}>{mdxContent.node.frontmatter.title}</Link>
-        </h4>
-        <div>
-          <Badge>{dateString}</Badge>
-        </div>
-      </Card.Header>
-      <Card.Body>
-        <div>
-          {mdxContent.getExcerpt()}{' '}
-          <Link to={mdxContent.node.fields.slug}>
-            <Button size="sm" variant="link">
-              Read more &raquo;
-            </Button>
-          </Link>
-        </div>
-      </Card.Body>
-    </Card>
-  );
-};

@@ -1,16 +1,16 @@
 siteMetadata:
-  siteName: MDX Launchpad
-  siteUrl: 'https://gatsby-starter-mdx-launchpad.netlify.app'
-  siteDescription: Lightweight Gatsby starter supporting TypeScript, and MDX. Start lightyears ahead!
+  siteName: Gumroad API Tester
+  siteUrl: 'https://justinmahar.github.io/gumroad-api-tester-webapp/'
+  siteDescription: A webapp for easily testing the Gumroad API.
   siteIcon: /media/site-icon.png
-  siteIconAlt: Rocketship blasting off
-  siteImage: '{siteUrl}/media/site-image.jpg'
+  siteIconAlt: Cyclone
+  siteImage: '{siteUrl}/media/site-image.png'
   siteImageWidth: 1200
-  siteImageHeight: 630
-  siteImageAlt: Kittens
+  siteImageHeight: 600
+  siteImageAlt: Repository information for project
 gatsbyPluginManifestOptions:
-  name: MDX Launchpad
-  shortName: launchpad
+  name: Gumroad API Tester
+  shortName: Gumroad API
   startUrl: /
   themeColor: '#1167b1'
   backgroundColor: '#03254c'

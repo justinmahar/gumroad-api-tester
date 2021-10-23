@@ -1,8 +1,8 @@
 <h2 align="center">
-  <a href="https://github.com/justinmahar/gatsby-starter-mdx-launchpad">
-    <img alt="Gatsby Starter: MDX Launchpad" src="https://github.com/justinmahar/gatsby-starter-mdx-launchpad/raw/master/static/media/site-icon.png" width="30" />
+  <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">
+    <img alt="Gatsby Starter: MDX Launchpad" src="https://github.com/justinmahar/gumroad-api-tester-webapp/raw/master/static/media/site-icon.png" width="30" />
   </a>
-  <a href="https://github.com/justinmahar/gatsby-starter-mdx-launchpad">
+  <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">
     Gatsby Starter: MDX Launchpad
   </a>
 </h2>
@@ -10,7 +10,7 @@
   Lightweight Gatsby starter supporting MDX and TypeScript. Start lightyears ahead!
 </h3>
 <p align="center">
-  <a href="https://github.com/justinmahar/gatsby-starter-mdx-launchpad/generate">
+  <a href="https://github.com/justinmahar/gumroad-api-tester-webapp/generate">
     <img src="https://img.shields.io/badge/GitHub-Use%20this%20template-brightgreen"/>
   </a>
   <a href="https://app.netlify.com/sites/gatsby-starter-mdx-launchpad/deploys">
@@ -67,7 +67,7 @@ See below for the main list of features.
 - **🕸️ XML Sitemap**
   - Give web crawlers a helping hand by auto-generating a `sitemap.xml` with all of your non-private pages.
 - **🌟 And much more!**
-  - I hope you enjoy! Please [star the project](https://github.com/justinmahar/gatsby-starter-mdx-launchpad) if it's helpful so others can find it. :)
+  - I hope you enjoy! Please [star the project](https://github.com/justinmahar/gumroad-api-tester-webapp) if it's helpful so others can find it. :)
 
 ## 🚀 Quick start
 
@@ -77,7 +77,7 @@ See below for the main list of features.
 
     ```shell
     # Create a new Gatsby site using this starter
-    gatsby new my-project https://github.com/justinmahar/gatsby-starter-mdx-launchpad
+    gatsby new my-project https://github.com/justinmahar/gumroad-api-tester-webapp
     ```
 
 1.  **Start developing.**
@@ -101,7 +101,7 @@ See below for the main list of features.
 
 Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/justinmahar/gatsby-starter-mdx-launchpad)
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/justinmahar/gumroad-api-tester-webapp)
 
 ## Table Of Contents
 
