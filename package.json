@@ -1,6 +1,5 @@
 {
   "name": "gumroad-api-tester-webapp",
-  "private": true,
   "description": "A webapp for easily testing the Gumroad API.",
   "version": "1.0.0",
   "author": "Justin Mahar <contact@justinmahar.com>",
@@ -91,7 +90,7 @@
     "gumroad api",
     "gumroad client"
   ],
-  "license": "0BSD",
+  "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
