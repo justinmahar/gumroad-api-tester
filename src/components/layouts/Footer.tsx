@@ -39,13 +39,18 @@ export default function Footer(props: FooterProps): JSX.Element {
                     <FaGithub />
                   </a>
                 </Nav>
-                <Nav>
-                  <div className="nav-link" role="button">
+                <Nav className="d-flex flex-wrap gap-2 justify-content-center">
+                  <div role="button">
                     <BuildStatusBadge
                       href="https://github.com/justinmahar/gumroad-api-tester-webapp/actions?query=workflow%3ADeploy"
                       src="https://github.com/justinmahar/gumroad-api-tester-webapp/workflows/Deploy/badge.svg"
                       reloadDisabled
                     />
+                  </div>
+                  <div role="button">
+                    <a href="https://badge.fury.io/js/gumroad-api-tester-webapp">
+                      <img src="https://badge.fury.io/js/gumroad-api-tester-webapp.svg" alt="npm Version" />
+                    </a>
                   </div>
                 </Nav>
               </div>

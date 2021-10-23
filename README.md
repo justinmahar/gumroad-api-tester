@@ -13,6 +13,9 @@
   <a href="https://github.com/justinmahar/gumroad-api-tester-webapp/actions?query=workflow%3ADeploy">
     <img src="https://github.com/justinmahar/gumroad-api-tester-webapp/workflows/Deploy/badge.svg" alt="Deploy Status"/>
   </a>
+  <a href="https://badge.fury.io/js/gumroad-api-tester-webapp">
+    <img src="https://badge.fury.io/js/gumroad-api-tester-webapp.svg" alt="npm Version"/>
+  </a>
 </p>
 
 👁️ **[Visit Live Site](https://justinmahar.github.io/gumroad-api-tester-webapp/)**
