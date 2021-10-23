@@ -99,6 +99,7 @@ export default function Head(props: HeadProps): JSX.Element {
       twitter={{
         twitterSummaryCard: twitterCard,
       }}
+      googleSiteVerification="oGa8IYjwnBLXFy3HtX-HDFfSsBseAY2A6RZn1YeMIvo"
     >
       {props.children}
     </SuperSEO>
