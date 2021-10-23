@@ -25,7 +25,7 @@ export default function Index(props: IndexProps): JSX.Element {
       <Body>
         <Container>
           <Row className="mb-5">
-            <Col md={{ offset: 1, span: 10 }} lg={{ offset: 3, span: 6 }}>
+            <Col md={{ offset: 1, span: 10 }} lg={{ offset: 2, span: 8 }} xl={{ offset: 3, span: 6 }}>
               <div className="d-flex align-items-center justify-content-between mb-3">
                 <h4>Gumroad API Tester</h4>
                 <div>
@@ -40,8 +40,8 @@ export default function Index(props: IndexProps): JSX.Element {
                 <Alert variant="info" dismissible className="mb-3" onClose={handleCloseInformationModal}>
                   <h6>Welcome!</h6>
                   <p>
-                    <a href="https://gumroad.com/">Gumroad</a> is a platform that allows you to sell digital services
-                    such as books, memberships, courses, and other digital products.
+                    <a href="https://gumroad.com/">Gumroad</a> is a platform that allows you to sell digital products
+                    such as books, memberships, courses, and more.
                   </p>
                   <p>
                     Below you can test out the <a href="https://app.gumroad.com/api">Gumroad API</a> using your{' '}

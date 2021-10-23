@@ -334,7 +334,7 @@ export const GumroadAPIWidget = (props: Props) => {
           </div>
         </Card.Header>
         <Card.Body>
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
             <ButtonGroup>
               <Button
                 variant={method === 'GET' ? 'info' : 'secondary'}
@@ -344,11 +344,11 @@ export const GumroadAPIWidget = (props: Props) => {
                 GET
               </Button>
               <Button
-                variant={method === 'DELETE' ? 'info' : 'secondary'}
-                className={method === 'DELETE' ? undefined : 'text-dark'}
-                onClick={() => setMethod('DELETE')}
+                variant={method === 'POST' ? 'info' : 'secondary'}
+                className={method === 'POST' ? undefined : 'text-dark'}
+                onClick={() => setMethod('POST')}
               >
-                DELETE
+                POST
               </Button>
               <Button
                 variant={method === 'PUT' ? 'info' : 'secondary'}
@@ -358,11 +358,11 @@ export const GumroadAPIWidget = (props: Props) => {
                 PUT
               </Button>
               <Button
-                variant={method === 'POST' ? 'info' : 'secondary'}
-                className={method === 'POST' ? undefined : 'text-dark'}
-                onClick={() => setMethod('POST')}
+                variant={method === 'DELETE' ? 'info' : 'secondary'}
+                className={method === 'DELETE' ? undefined : 'text-dark'}
+                onClick={() => setMethod('DELETE')}
               >
-                POST
+                DELETE
               </Button>
             </ButtonGroup>
             <CancelableFormControl
@@ -370,6 +370,7 @@ export const GumroadAPIWidget = (props: Props) => {
               placeholder="GET, DELETE, PUT, POST, etc."
               value={method || ''}
               className="font-monospace"
+              style={{ width: 150 }}
               onChange={(e) => setMethod(e.target.value)}
               onCancel={() => setMethod('')}
             />
@@ -381,7 +382,12 @@ export const GumroadAPIWidget = (props: Props) => {
         <Card.Body>
           <Stack gap={1}>
             <Stack gap={1}>{apiParamElements}</Stack>
-            <div className={combineClassNames('d-flex gap-1', params.length > 0 ? 'justify-content-end' : undefined)}>
+            <div
+              className={combineClassNames(
+                'd-flex gap-1',
+                params.length > 0 ? 'justify-content-end' : 'justify-content-center',
+              )}
+            >
               <IconButton
                 icon={FaPlus}
                 variant="primary"
