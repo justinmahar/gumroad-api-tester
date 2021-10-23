@@ -26,7 +26,7 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-ea4ceac78d0208f7b21e.js"
+    "url": "webpack-runtime-3d9718402aaed0aa92c2.js"
   },
   {
     "url": "framework-970e2cc72306129e7235.js"
@@ -35,21 +35,29 @@ self.__precacheManifest = [
     "url": "styles.34e4a4d9c49b8bcd20f2.css"
   },
   {
-    "url": "app-d94c282ba6ec083e5ca4.js"
+    "url": "app-a8ace3c2a02a39c7e7ea.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "5621a3537298dfc8d602eb52b2fbdb60"
+    "revision": "f1f2273230d3c361262ef37de3566d73"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-7a6bf32ff83a3066df58.js"
+  },
+  {
+    "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
+    "revision": "f2c002077289a7e1ac538802bc7f5314"
+  },
+  {
+    "url": "page-data/app-data.json",
+    "revision": "f903504b7954ec8cc3aacec7a4e078f5"
   },
   {
     "url": "polyfill-628efea4784bb13157c2.js"
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "fe4dac6d9fb6933ae1dac81316555f37"
+    "revision": "a9bb892b1c777dc9acedc3a1ab53d582"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -136,12 +144,12 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^`), ``)
+  pathname = pathname.replace(new RegExp(`^/gumroad-api-tester-webapp`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/app-d94c282ba6ec083e5ca4.js`))) {
+  if (!resources || !(await caches.match(`/gumroad-api-tester-webapp/app-a8ace3c2a02a39c7e7ea.js`))) {
     return await fetch(event.request)
   }
 
@@ -154,7 +162,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/gumroad-api-tester-webapp/offline-plugin-app-shell-fallback/index.html`
   const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
   return await caches.match(offlineShellWithKey)
 })

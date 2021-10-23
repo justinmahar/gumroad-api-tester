@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://justinmahar.github.io/sitemap/sitemap-index.xml
+Sitemap: https://justinmahar.github.io/gumroad-api-tester-webapp/sitemap/sitemap-index.xml
 Host: https://justinmahar.github.io
