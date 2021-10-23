@@ -35,11 +35,11 @@ self.__precacheManifest = [
     "url": "styles.34e4a4d9c49b8bcd20f2.css"
   },
   {
-    "url": "app-a8ace3c2a02a39c7e7ea.js"
+    "url": "app-833572e3b8153d0e7987.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "acc67248eddba62838b6c6dbf833b144"
+    "revision": "c9bb5b13c5e01fb15da12c92141fc39e"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-7a6bf32ff83a3066df58.js"
@@ -50,7 +50,7 @@ self.__precacheManifest = [
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "0db8c6dd27098b9eeccdfb67a9c47064"
+    "revision": "4f3e6ead6a724c460cf9056cf0a584bb"
   },
   {
     "url": "polyfill-628efea4784bb13157c2.js"
@@ -149,7 +149,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/gumroad-api-tester-webapp/app-a8ace3c2a02a39c7e7ea.js`))) {
+  if (!resources || !(await caches.match(`/gumroad-api-tester-webapp/app-833572e3b8153d0e7987.js`))) {
     return await fetch(event.request)
   }
 
