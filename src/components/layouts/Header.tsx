@@ -15,7 +15,7 @@ export default function Header(_props: HeaderProps): JSX.Element {
           <div className="d-flex flex-row">
             <div className="d-flex align-items-center me-2">
               <img
-                src={settings.data.site.siteMetadata.siteIcon}
+                src={`${settings.data.site.siteMetadata.siteUrl}${settings.data.site.siteMetadata.siteIcon}`}
                 alt={settings.data.site.siteMetadata.siteIconAlt}
                 width={30}
                 height={30}
