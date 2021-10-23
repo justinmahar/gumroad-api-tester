@@ -9,6 +9,7 @@ import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
 import { Alert } from 'react-bootstrap';
 import { useLocalStorageBoolean } from 'react-use-window-localstorage';
 import { FaRegQuestionCircle } from '@react-icons/all-files/fa/FaRegQuestionCircle';
+import { v2Api } from '../components/content/v2api';
 
 interface IndexProps {
   data: any;
@@ -75,6 +76,10 @@ export default function Index(props: IndexProps): JSX.Element {
                   <p>
                     When retrieving products, buy buttons are shown so that you can test product purchases right from
                     within this testing tool.
+                  </p>
+                  <p>
+                    Try the <code className="px-1 border border-light rounded-2">GET: /user</code> endpoint for a quick
+                    test of your access token.
                   </p>
                 </Alert>
               )}

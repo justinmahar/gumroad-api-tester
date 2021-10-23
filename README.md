@@ -30,6 +30,8 @@ All v2 endpoints are available for quick selection, or you can manually enter th
 
 When retrieving products, buy buttons are shown so that you can test product purchases right from within this testing tool.
 
+Try the `GET: /user` endpoint for a quick test of your access token.
+
 **[Get started here.](https://justinmahar.github.io/gumroad-api-tester-webapp/)**
 
 ## Contributing

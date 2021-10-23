@@ -1,4 +1,7 @@
+import { Card } from 'react-bootstrap';
 import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
+import { AiOutlineApi } from '@react-icons/all-files/ai/AiOutlineApi';
+import { AiOutlineKey } from '@react-icons/all-files/ai/AiOutlineKey';
 import { FaPaste } from '@react-icons/all-files/fa/FaPaste';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import { FaTrashAlt } from '@react-icons/all-files/fa/FaTrashAlt';
@@ -351,30 +354,46 @@ export const GumroadAPIWidget = (props: Props) => {
         </div>
         <div>
           <Form.Group controlId="access-token">
-            <Form.Label>Access Token</Form.Label>
-            <Stack direction="horizontal" gap={1}>
-              <CancelableFormControl
-                type="text"
-                placeholder="Paste access token here"
-                value={accessToken || ''}
-                inputStyle={{ background: !accessToken ? 'rgb(255, 230, 230)' : 'rgb(240, 240, 255)' }}
-                required
-                onChange={(e) => {
-                  setAccessToken(e.target.value);
-                }}
-                onCancel={() => {
-                  setAccessToken('');
-                }}
+            <Form.Label className="d-flex align-items-center gap-2">
+              <AiOutlineKey className="fs-4 text-warning" /> Access Token
+            </Form.Label>
+            <div className="d-flex gap-1 align-items-center position-relative">
+              <ImArrowRight
+                className={combineClassNames('position-absolute text-info', !!accessToken ? 'd-none' : undefined)}
+                style={{ left: -30 }}
               />
-              <IconButton icon={FaPaste} variant="secondary" onClick={handlePasteAccessToken} />
-            </Stack>
+              <Stack direction="horizontal" gap={1} className="w-100">
+                <CancelableFormControl
+                  type="text"
+                  placeholder="Paste access token here"
+                  value={accessToken || ''}
+                  inputStyle={{ background: !accessToken ? 'rgb(255, 230, 230)' : 'rgb(240, 240, 255)' }}
+                  required
+                  onChange={(e) => {
+                    setAccessToken(e.target.value);
+                  }}
+                  onCancel={() => {
+                    setAccessToken('');
+                  }}
+                />
+                <IconButton icon={FaPaste} variant="secondary" onClick={handlePasteAccessToken} />
+              </Stack>
+            </div>
           </Form.Group>
         </div>
-        <div>
+        <div className="mb-2">
           <Form.Group controlId="selected-endpoint">
-            <Form.Label>Select An Endpoint (v2)</Form.Label>
+            <Form.Label className="d-flex align-items-center gap-2">
+              <AiOutlineApi className="fs-4 text-info" /> Select An Endpoint
+            </Form.Label>
             <div className="d-flex gap-1 align-items-center position-relative">
-              <ImArrowRight className="position-absolute text-info" style={{ left: -30 }} />
+              <ImArrowRight
+                className={combineClassNames(
+                  'position-absolute text-info',
+                  !!accessToken && selectedEndpointIndex < 0 ? undefined : 'd-none',
+                )}
+                style={{ left: -30 }}
+              />
               <Form.Select
                 value={selectedEndpointIndex}
                 onChange={(e: any) => {
@@ -396,140 +415,148 @@ export const GumroadAPIWidget = (props: Props) => {
               </Form.Select>
             </div>
             {selectedEndpoint && (
-              <Alert variant="info" className="mt-1 py-1">
+              <Alert variant="info" className="mt-1 py-1 mb-0">
                 {selectedEndpoint.description}
               </Alert>
             )}
           </Form.Group>
         </div>
-        <Stack gap={1}>
-          <Form.Group controlId="endpoint-url">
-            <Form.Label>Endpoint URL</Form.Label>
-            <CancelableFormControl
-              type="text"
-              placeholder="API endpoint e.g. /products"
-              value={endpointUrl || ''}
-              required
-              onChange={(e) => {
-                setEndpointUrl(e.target.value);
-                updateUrlParamsForEndpointUrl(e.target.value);
-              }}
-              onCancel={() => {
-                setEndpointUrl('');
-                updateUrlParamsForEndpointUrl('');
-              }}
-              className="font-monospace"
-            />
-          </Form.Group>
-          <Stack gap={1}>{urlParamElements}</Stack>
-        </Stack>
-        <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <Stack direction="horizontal" gap={2}>
-                <div className="text-dark">Method</div>
-                <div>
-                  <Badge bg="info" className="font-monospace">
-                    {method}
-                  </Badge>
-                </div>
-              </Stack>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
-                <ButtonGroup>
-                  <Button
-                    variant={method === 'GET' ? 'info' : 'secondary'}
-                    className={method === 'GET' ? undefined : 'text-dark'}
-                    onClick={() => setMethod('GET')}
-                  >
-                    GET
-                  </Button>
-                  <Button
-                    variant={method === 'POST' ? 'info' : 'secondary'}
-                    className={method === 'POST' ? undefined : 'text-dark'}
-                    onClick={() => setMethod('POST')}
-                  >
-                    POST
-                  </Button>
-                  <Button
-                    variant={method === 'PUT' ? 'info' : 'secondary'}
-                    className={method === 'PUT' ? undefined : 'text-dark'}
-                    onClick={() => setMethod('PUT')}
-                  >
-                    PUT
-                  </Button>
-                  <Button
-                    variant={method === 'DELETE' ? 'info' : 'secondary'}
-                    className={method === 'DELETE' ? undefined : 'text-dark'}
-                    onClick={() => setMethod('DELETE')}
-                  >
-                    DELETE
-                  </Button>
-                </ButtonGroup>
-                <CancelableFormControl
-                  type="text"
-                  placeholder="Enter method"
-                  value={method || ''}
-                  className="font-monospace"
-                  style={{ width: 150 }}
-                  required
-                  onChange={(e) => setMethod(e.target.value)}
-                  onCancel={() => setMethod('')}
-                />
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-        <Accordion activeKey={showParams ? '0' : 'none'}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header onClick={() => setShowParams(!showParams)}>
-              <Stack direction="horizontal" gap={2}>
-                <div className="text-dark">Params</div>
-              </Stack>
-            </Accordion.Header>
-            <Accordion.Body>
+        <Card>
+          <Card.Header>Call Configuration</Card.Header>
+          <Card.Body>
+            <Stack gap={2}>
               <Stack gap={1}>
-                <Stack gap={1}>{apiParamElements}</Stack>
-                <div
-                  className={combineClassNames(
-                    'd-flex gap-1',
-                    params.length > 0 ? 'justify-content-end' : 'justify-content-center',
-                  )}
-                >
-                  <IconButton
-                    icon={FaPlus}
-                    variant="primary"
-                    onClick={() => {
-                      setParams([...params, { k: '', v: '' }]);
+                <Form.Group controlId="endpoint-url">
+                  <Form.Label>Endpoint URL</Form.Label>
+                  <CancelableFormControl
+                    type="text"
+                    placeholder="API endpoint e.g. /products"
+                    value={endpointUrl || ''}
+                    required
+                    onChange={(e) => {
+                      setEndpointUrl(e.target.value);
+                      updateUrlParamsForEndpointUrl(e.target.value);
                     }}
-                  >
-                    Add Param
-                  </IconButton>
-                  {params.length > 0 && (
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setParams([]);
-                      }}
-                    >
-                      Delete All
-                    </Button>
-                  )}
-                </div>
-                {showEmptyParamsAlert && (
-                  <Alert variant="info" className="py-1 my-2 small">
-                    Refer to the{' '}
-                    <a href="https://app.gumroad.com/api" target="_blank" rel="noopener noreferrer">
-                      docs <FaExternalLinkAlt style={{ fontSize: '80%' }} />
-                    </a>{' '}
-                    for param specifications. Some params are optional. Empty params will not be sent.
-                  </Alert>
-                )}
+                    onCancel={() => {
+                      setEndpointUrl('');
+                      updateUrlParamsForEndpointUrl('');
+                    }}
+                    className="font-monospace"
+                  />
+                </Form.Group>
+                <Stack gap={1}>{urlParamElements}</Stack>
               </Stack>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <Stack direction="horizontal" gap={2}>
+                      <div className="text-dark">Method</div>
+                      <div>
+                        <Badge bg="info" className="font-monospace">
+                          {method}
+                        </Badge>
+                      </div>
+                    </Stack>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
+                      <ButtonGroup>
+                        <Button
+                          variant={method === 'GET' ? 'info' : 'secondary'}
+                          className={method === 'GET' ? undefined : 'text-dark'}
+                          onClick={() => setMethod('GET')}
+                        >
+                          GET
+                        </Button>
+                        <Button
+                          variant={method === 'POST' ? 'info' : 'secondary'}
+                          className={method === 'POST' ? undefined : 'text-dark'}
+                          onClick={() => setMethod('POST')}
+                        >
+                          POST
+                        </Button>
+                        <Button
+                          variant={method === 'PUT' ? 'info' : 'secondary'}
+                          className={method === 'PUT' ? undefined : 'text-dark'}
+                          onClick={() => setMethod('PUT')}
+                        >
+                          PUT
+                        </Button>
+                        <Button
+                          variant={method === 'DELETE' ? 'info' : 'secondary'}
+                          className={method === 'DELETE' ? undefined : 'text-dark'}
+                          onClick={() => setMethod('DELETE')}
+                        >
+                          DELETE
+                        </Button>
+                      </ButtonGroup>
+                      <CancelableFormControl
+                        type="text"
+                        placeholder="Enter method"
+                        value={method || ''}
+                        className="font-monospace"
+                        style={{ width: 150 }}
+                        required
+                        onChange={(e) => setMethod(e.target.value)}
+                        onCancel={() => setMethod('')}
+                      />
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+              <Accordion activeKey={showParams ? '0' : 'none'}>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header onClick={() => setShowParams(!showParams)}>
+                    <Stack direction="horizontal" gap={2}>
+                      <div className="text-dark">Params</div>
+                    </Stack>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Stack gap={1}>
+                      <Stack gap={1}>{apiParamElements}</Stack>
+                      <div
+                        className={combineClassNames(
+                          'd-flex gap-1',
+                          params.length > 0 ? 'justify-content-end' : 'justify-content-center',
+                        )}
+                      >
+                        <IconButton
+                          icon={FaPlus}
+                          variant="primary"
+                          onClick={() => {
+                            setParams([...params, { k: '', v: '' }]);
+                          }}
+                        >
+                          Add Param
+                        </IconButton>
+                        {params.length > 0 && (
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setParams([]);
+                            }}
+                          >
+                            Delete All
+                          </Button>
+                        )}
+                      </div>
+                      {showEmptyParamsAlert && (
+                        <Alert variant="info" className="py-1 my-2 small">
+                          Refer to the{' '}
+                          <a href="https://app.gumroad.com/api" target="_blank" rel="noopener noreferrer">
+                            docs <FaExternalLinkAlt style={{ fontSize: '80%' }} />
+                          </a>{' '}
+                          for param specifications. Some params are optional. Empty params will not be sent.
+                        </Alert>
+                      )}
+                    </Stack>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Stack>
+          </Card.Body>
+        </Card>
+
         <div className="d-flex justify-content-end align-items-center gap-2">
           {typeof wasSuccessful === 'boolean' && !wasSuccessful && <Badge bg="danger">Error</Badge>}
           {typeof wasSuccessful === 'boolean' && wasSuccessful && <Badge bg="success">Success</Badge>}
