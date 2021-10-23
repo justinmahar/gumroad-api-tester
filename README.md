@@ -1,6 +1,6 @@
 <h2 align="center">
   <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">
-    <img alt="Gatsby Starter: MDX Launchpad" src="https://github.com/justinmahar/gumroad-api-tester-webapp/raw/master/static/media/site-icon.png" width="30" />
+    <img alt="Gumroad API Tester" src="https://github.com/justinmahar/gumroad-api-tester-webapp/raw/master/static/media/site-icon.png" width="30" />
   </a>
   <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">
     Gumroad API Tester
