@@ -19,7 +19,11 @@ export default function Footer(props: FooterProps): JSX.Element {
           <Col>
             <div className="d-flex flex-column justify-content-center">
               <div className="text-center text-white mt-6 mb-2">
-                Copyright &copy; {templateTagRenderer.render('{year}')} Justin Mahar. Logo by{' '}
+                Copyright &copy; {templateTagRenderer.render('{year}')}{' '}
+                <a href="https://github.com/justinmahar/" className="text-reset">
+                  Justin Mahar
+                </a>
+                . Logo by{' '}
                 <a
                   href="https://twemoji.twitter.com/"
                   target="_blank"
@@ -41,16 +45,16 @@ export default function Footer(props: FooterProps): JSX.Element {
                 </Nav>
                 <Nav className="d-flex flex-wrap gap-2 justify-content-center">
                   <div role="button">
+                    <a href="https://badge.fury.io/js/gumroad-api-tester-webapp">
+                      <img src="https://badge.fury.io/js/gumroad-api-tester-webapp.svg" alt="npm Version" />
+                    </a>
+                  </div>
+                  <div role="button">
                     <BuildStatusBadge
                       href="https://github.com/justinmahar/gumroad-api-tester-webapp/actions?query=workflow%3ADeploy"
                       src="https://github.com/justinmahar/gumroad-api-tester-webapp/workflows/Deploy/badge.svg"
                       reloadDisabled
                     />
-                  </div>
-                  <div role="button">
-                    <a href="https://badge.fury.io/js/gumroad-api-tester-webapp">
-                      <img src="https://badge.fury.io/js/gumroad-api-tester-webapp.svg" alt="npm Version" />
-                    </a>
                   </div>
                 </Nav>
               </div>
