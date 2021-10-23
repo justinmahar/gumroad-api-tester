@@ -40,6 +40,10 @@ export default function Index(props: IndexProps): JSX.Element {
                 <Alert variant="info" dismissible className="mb-3" onClose={handleCloseInformationModal}>
                   <h6>Welcome!</h6>
                   <p>
+                    <a href="https://gumroad.com/">Gumroad</a> is a platform that allows you to sell digital services
+                    such as books, memberships, courses, and other digital products.
+                  </p>
+                  <p>
                     Below you can test out the <a href="https://app.gumroad.com/api">Gumroad API</a> using your{' '}
                     <a href="https://app.gumroad.com/settings/advanced#application-form">access token</a>. This tool can
                     also be helpful if you need to make changes not supported via the website, such as adding resource

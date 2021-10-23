@@ -19,6 +19,8 @@
 
 ## Description
 
+[Gumroad](https://gumroad.com/) is a platform that allows you to sell digital services such as books, memberships, courses, and other digital products.
+
 Using this tool, you can test out the [Gumroad API](https://app.gumroad.com/api) using your [access token](https://app.gumroad.com/settings/advanced#application-form). This tool can also be helpful if you need to make changes not supported via the website, such as adding resource subscriptions.
 
 All v2 endpoints are available for quick selection, or you can manually enter things if you'd like. Some parameters are optional—be sure to reference the [API docs](https://app.gumroad.com/api) when in doubt.
