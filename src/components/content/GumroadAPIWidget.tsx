@@ -41,6 +41,8 @@ export const GumroadAPIWidget = (props: Props) => {
   const [lastFetchMethod, setLastFetchMethod] = React.useState('');
   const [lastFetchUrl, setLastFetchUrl] = React.useState('');
 
+  const [pastedAccessToken, setPastedAccessToken] = React.useState('');
+
   let statusLabel = `${status}`;
   switch (status) {
     case 200:
@@ -188,12 +190,18 @@ export const GumroadAPIWidget = (props: Props) => {
         navigator.clipboard
           .readText()
           .then((text) => {
-            setAccessToken(text);
+            setPastedAccessToken(text);
           })
           .catch((e) => console.error(e));
       }
     });
   };
+
+  React.useEffect(() => {
+    if (pastedAccessToken) {
+      setAccessToken(pastedAccessToken);
+    }
+  }, [pastedAccessToken, setAccessToken]);
 
   const updateUrlParamsForEndpointUrl = (newEndpointUrl: string) => {
     if (newEndpointUrl) {
