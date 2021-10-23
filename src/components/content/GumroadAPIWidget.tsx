@@ -358,7 +358,31 @@ export const GumroadAPIWidget = (props: Props) => {
         <div>
           <Form.Group controlId="access-token">
             <Form.Label className="d-flex align-items-center gap-2">
-              <AiOutlineKey className="fs-4 text-warning" /> Access Token
+              <div className="d-flex align-items-center">
+                <AiOutlineKey className="fs-4 text-warning" />
+              </div>
+              <div>Access Token</div>
+              {!accessToken && (
+                <div>
+                  <a
+                    href="https://app.gumroad.com/settings/advanced#application-form"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <IconButton
+                      icon={FaExternalLinkAlt}
+                      variant="link"
+                      size="sm"
+                      end
+                      className="py-0"
+                      style={{ fontSize: '80%' }}
+                      iconProps={{ style: { fontSize: '80%' } }}
+                    >
+                      Get One
+                    </IconButton>
+                  </a>
+                </div>
+              )}
             </Form.Label>
             <div className="d-flex gap-1 align-items-center position-relative">
               <ImArrowRight
@@ -387,7 +411,10 @@ export const GumroadAPIWidget = (props: Props) => {
         <div className="mb-2">
           <Form.Group controlId="selected-endpoint">
             <Form.Label className="d-flex align-items-center gap-2">
-              <AiOutlineApi className="fs-4 text-info" /> Select An Endpoint
+              <div className="d-flex align-items-center">
+                <AiOutlineApi className="fs-4 text-info" />
+              </div>
+              <div>Select An Endpoint</div>
             </Form.Label>
             <div className="d-flex gap-1 align-items-center position-relative">
               <ImArrowRight

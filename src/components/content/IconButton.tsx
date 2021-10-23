@@ -1,4 +1,5 @@
 import { IconType } from '@react-icons/all-files';
+import { IconBaseProps } from '@react-icons/all-files/lib';
 import React from 'react';
 import { Button, ButtonProps } from 'react-bootstrap';
 import { combineClassNames } from '../component-utils';
@@ -12,6 +13,8 @@ interface IconButtonProps extends ButtonProps {
   end?: boolean;
   /** Enable text wrapping. */
   wrap?: boolean;
+  /** Props for icon */
+  iconProps?: IconBaseProps;
 }
 
 export const IconButton = ({ block, icon, end, wrap, ...props }: IconButtonProps): JSX.Element => {
@@ -22,8 +25,13 @@ export const IconButton = ({ block, icon, end, wrap, ...props }: IconButtonProps
     <Button {...props} className={combineClassNames(iconOnly ? 'position-relative' : undefined, props.className)}>
       {iconOnly && (
         <>
-          <Icon className="position-absolute top-50 start-50 translate-middle" />
-          <Icon className="invisible" />
+          <Icon
+            className={combineClassNames(
+              'position-absolute top-50 start-50 translate-middle',
+              props.iconProps?.className,
+            )}
+          />
+          <Icon className={combineClassNames('invisible', props.iconProps?.className)} />
         </>
       )}
       {!iconOnly && (
@@ -33,7 +41,12 @@ export const IconButton = ({ block, icon, end, wrap, ...props }: IconButtonProps
             wrap ? 'flex-wrap' : 'text-nowrap',
           )}
         >
-          {<Icon className={end ? 'order-last' : undefined} />}
+          {
+            <Icon
+              {...props.iconProps}
+              className={combineClassNames(end ? 'order-last' : undefined, props.iconProps?.className)}
+            />
+          }
           <div>{props.children}</div>
         </div>
       )}
