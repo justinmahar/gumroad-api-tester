@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Stack } from 'react-bootstrap';
 import { GumroadAPIWidget } from '../components/content/GumroadAPIWidget';
 import { IconButton } from '../components/content/IconButton';
 import Body from '../components/layouts/Body';
@@ -7,6 +7,8 @@ import Head from '../components/layouts/Head';
 import Layout from '../components/layouts/Layout';
 import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
 import { Alert } from 'react-bootstrap';
+import { useLocalStorageBoolean } from 'react-use-window-localstorage';
+import { FaRegQuestionCircle } from '@react-icons/all-files/fa/FaRegQuestionCircle';
 
 interface IndexProps {
   data: any;
@@ -16,7 +18,10 @@ export default function Index(props: IndexProps): JSX.Element {
   const pageTitle = `{siteName}`;
   const description = `{siteDescription}`;
 
-  const [showInformationModal, setShowInformationModal] = React.useState(true);
+  const [showInformationModal, setShowInformationModal, showInformationModalLoading] = useLocalStorageBoolean(
+    'showInformationModal',
+    true,
+  );
   const handleCloseInformationModal = () => setShowInformationModal(false);
 
   return (
@@ -26,17 +31,28 @@ export default function Index(props: IndexProps): JSX.Element {
         <Container>
           <Row className="mb-5">
             <Col md={{ offset: 1, span: 10 }} lg={{ offset: 2, span: 8 }} xl={{ offset: 3, span: 6 }}>
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <h4>Gumroad API Tester</h4>
+              <Stack direction="horizontal" className="flex-wrap justify-content-between mb-3" gap={2}>
+                <Stack direction="horizontal" gap={2}>
+                  <h4 className="p-0 m-0">Gumroad API Tester</h4>
+                  {!showInformationModal && (
+                    <IconButton
+                      icon={FaRegQuestionCircle}
+                      variant="link"
+                      className="text-info"
+                      size="sm"
+                      onClick={() => setShowInformationModal(true)}
+                    />
+                  )}
+                </Stack>
                 <div>
                   <a href="https://app.gumroad.com/api" target="_blank" rel="noopener noreferrer">
                     <IconButton variant="secondary" size="sm" icon={FaExternalLinkAlt} end>
-                      Gumroad API Documentation
+                      API Docs
                     </IconButton>
                   </a>
                 </div>
-              </div>
-              {showInformationModal && (
+              </Stack>
+              {!showInformationModalLoading && showInformationModal && (
                 <Alert variant="info" dismissible className="mb-3" onClose={handleCloseInformationModal}>
                   <h6>Welcome!</h6>
                   <p>

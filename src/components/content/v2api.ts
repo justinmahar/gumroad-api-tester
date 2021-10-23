@@ -24,7 +24,7 @@ export const v2Api: RESTEndpoint[] = [
     params: [
       { k: 'license_key', v: '' },
       { k: 'increment_uses_count', v: 'true' },
-      { k: 'decrement_uses_count', v: 'false' },
+      { k: 'decrement_uses_count', v: '' },
     ],
   },
   {
@@ -123,13 +123,13 @@ export const v2Api: RESTEndpoint[] = [
     endpointUrl: '/products/:product_id/variant_categories',
     method: 'POST',
     description: 'Create a new variant category on a product.',
-    params: [],
+    params: [{ k: 'title', v: '' }],
   },
   {
     endpointUrl: '/products/:product_id/variant_categories/:id',
     method: 'DELETE',
     description: 'Permanently delete a variant category of a product.',
-    params: [{ k: 'title', v: '' }],
+    params: [],
   },
   {
     endpointUrl: '/products/:product_id/variant_categories/:id',

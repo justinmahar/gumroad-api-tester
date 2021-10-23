@@ -1,9 +1,13 @@
-import { FaTrashAlt } from '@react-icons/all-files/fa/FaTrashAlt';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
+import { FaTrashAlt } from '@react-icons/all-files/fa/FaTrashAlt';
 import React from 'react';
-import { Alert, Badge, Button, ButtonGroup, Card, Form, Stack } from 'react-bootstrap';
+import { Accordion, Alert, Badge, Button, ButtonGroup, Card, Form, Stack } from 'react-bootstrap';
+import AccordionBody from 'react-bootstrap/esm/AccordionBody';
+import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
+import AccordionItem from 'react-bootstrap/esm/AccordionItem';
 import ReactJson from 'react-json-view-ssr';
 import { useLocalStorageObject, useLocalStorageString } from 'react-use-window-localstorage';
+import styled from 'styled-components';
 import { combineClassNames } from '../component-utils';
 import { CancelableFormControl } from '../widgets/CancelableFormControl';
 import { IconButton } from './IconButton';
@@ -11,8 +15,10 @@ import { Param, RESTEndpoint, v2Api } from './v2api';
 
 interface Props {}
 
+const API_ROOT_DEFAULT = 'https://api.gumroad.com/v2';
+
 export const GumroadAPIWidget = (props: Props) => {
-  const [apiRoot, setAPIRoot] = useLocalStorageString('gumroadAPIRoot', 'https://api.gumroad.com/v2');
+  const [apiRoot, setAPIRoot] = useLocalStorageString('gumroadAPIRoot', API_ROOT_DEFAULT);
   const [accessToken, setAccessToken] = useLocalStorageString('gumroadAccessToken', '');
   const [endpointUrl, setEndpointUrl] = useLocalStorageString('gumroadEndpointUrl', '');
   const [method, setMethod] = useLocalStorageString('gumroadMethod', 'GET');
@@ -20,8 +26,10 @@ export const GumroadAPIWidget = (props: Props) => {
   const [params, setParams] = useLocalStorageObject('gumroadParams', []);
   const [status, setStatus] = React.useState(-1);
   const [response, setResponse] = React.useState('');
+  const [fetchTime, setFetchTime] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>('');
   const [successMessage, setSuccessMessage] = React.useState<string | undefined>('');
+  const [wasSuccessful, setWasSuccessful] = React.useState<boolean | undefined>();
   const [selectedEndpointIndex, setSelectedEndpointIndex] = React.useState<number>(-1);
   const selectedEndpoint: RESTEndpoint | undefined =
     selectedEndpointIndex >= 0 ? v2Api[selectedEndpointIndex] : undefined;
@@ -60,7 +68,6 @@ export const GumroadAPIWidget = (props: Props) => {
       const queryParams = [{ k: 'access_token', v: accessToken }, ...(method === 'GET' ? params : [])];
       let finalizedEndpointUrl = endpointUrl;
       urlParams.forEach((urlParam: Param) => {
-        console.log(`:${urlParam.k}`, encodeURIComponent(urlParam.v));
         finalizedEndpointUrl = finalizedEndpointUrl.replace(`:${urlParam.k}`, encodeURIComponent(urlParam.v));
       });
       const fetchUrl =
@@ -69,18 +76,16 @@ export const GumroadAPIWidget = (props: Props) => {
         finalizedEndpointUrl +
         '?' +
         queryParams
-          .filter((param) => param.k.length > 0)
+          .filter((param) => param.k.length > 0 && param.v.length > 0)
           .map((param) => `${encodeURIComponent(param.k)}=${encodeURIComponent(param.v)}`)
           .join('&');
       console.log(fetchUrl);
       const paramMap: Record<string, string> = {};
       params.forEach((param: Param) => {
-        if (param.k.length > 0) {
+        if (param.k.length > 0 && param.v.length > 0) {
           paramMap[param.k] = param.v;
         }
       });
-      setLastFetchMethod(method);
-      setLastFetchUrl(fetchUrl);
       fetch(fetchUrl, {
         method,
         headers:
@@ -100,22 +105,51 @@ export const GumroadAPIWidget = (props: Props) => {
           setResponse(data);
           let newErrorMessage = undefined;
           let newSuccessMessage = undefined;
+          let newWasSuccessful = undefined;
           try {
             const json = JSON.parse(data);
             if (typeof json.success !== 'undefined' && !json.success && typeof json.message === 'string') {
               newErrorMessage = json.message;
-            } else if (typeof json.success !== 'undefined' && json.success && typeof json.message === 'string') {
-              newSuccessMessage = json.message;
+              newWasSuccessful = false;
+            } else if (typeof json.success !== 'undefined' && json.success) {
+              newWasSuccessful = true;
+              if (typeof json.message === 'string') {
+                newSuccessMessage = json.message;
+              }
             }
           } catch (e) {}
           setErrorMessage(newErrorMessage);
           setSuccessMessage(newSuccessMessage);
+          setWasSuccessful(newWasSuccessful);
         })
         .catch((e) => {
           console.error(e);
           setErrorMessage(`${e}`);
+        })
+        .finally(() => {
+          setLastFetchMethod(method);
+          setLastFetchUrl(fetchUrl);
+          setFetchTime(new Date().getTime());
         });
     }
+  };
+
+  const handleReset = () => {
+    setAPIRoot(API_ROOT_DEFAULT);
+    setAccessToken('');
+    setEndpointUrl('');
+    setMethod('GET');
+    setUrlParams([]);
+    setParams([]);
+    setStatus(-1);
+    setResponse('');
+    setFetchTime(0);
+    setErrorMessage('');
+    setSuccessMessage('');
+    setWasSuccessful(undefined);
+    setSelectedEndpointIndex(-1);
+    setLastFetchMethod('');
+    setLastFetchUrl('');
   };
 
   let responseJson = undefined;
@@ -165,6 +199,8 @@ export const GumroadAPIWidget = (props: Props) => {
           type="text"
           placeholder={`Enter ${urlParams[index].k} value`}
           value={urlParams[index].v}
+          required
+          inputStyle={{ background: urlParams[index].v.length === 0 ? 'rgb(255, 230, 230)' : 'rgb(240, 240, 255)' }}
           onChange={(e) => {
             const newParams = [...urlParams];
             newParams[index] = { ...newParams[index], v: e.target.value };
@@ -187,6 +223,9 @@ export const GumroadAPIWidget = (props: Props) => {
           type="text"
           placeholder="Enter key name"
           value={params[index].k}
+          inputStyle={
+            params[index].k.length > 0 && params[index].v.length > 0 ? { background: 'rgb(240, 240, 255)' } : undefined
+          }
           onChange={(e) => {
             const newParams = [...params];
             newParams[index] = { ...newParams[index], k: e.target.value };
@@ -203,6 +242,9 @@ export const GumroadAPIWidget = (props: Props) => {
           type="text"
           placeholder="Enter value"
           value={params[index].v}
+          inputStyle={
+            params[index].k.length > 0 && params[index].v.length > 0 ? { background: 'rgb(240, 240, 255)' } : undefined
+          }
           onChange={(e) => {
             const newParams = [...params];
             newParams[index] = { ...newParams[index], v: e.target.value };
@@ -235,239 +277,287 @@ export const GumroadAPIWidget = (props: Props) => {
     );
   });
 
+  const sendButtonEnabled = !!method;
+
+  const showEmptyParamsAlert = Array.isArray(params) && params.length > 0;
+
   return (
-    <Stack gap={2}>
-      <div>
-        <Form.Group controlId="api-root-url">
-          <Form.Label>API Root URL</Form.Label>
-          <CancelableFormControl
-            type="text"
-            placeholder="Root URL for the Gumroad API"
-            value={apiRoot || ''}
-            onChange={(e) => {
-              setAPIRoot(e.target.value);
-              if (typeof localStorage !== 'undefined') {
-                localStorage['gumroadAPIRoot'] = e.target.value;
-              }
-            }}
-            onCancel={() => {
-              setAPIRoot('');
-              if (typeof localStorage !== 'undefined') {
-                delete localStorage['gumroadAPIRoot'];
-              }
-            }}
-          />
-        </Form.Group>
-      </div>
-      <div>
-        <Form.Group controlId="access-token">
-          <Form.Label>Access Token</Form.Label>
-          <CancelableFormControl
-            type="text"
-            placeholder="Paste access token here"
-            value={accessToken || ''}
-            onChange={(e) => {
-              setAccessToken(e.target.value);
-            }}
-            onCancel={() => {
-              setAccessToken('');
-            }}
-          />
-        </Form.Group>
-      </div>
-      <div>
-        <Form.Group controlId="selected-endpoint">
-          <Form.Label>Select An Endpoint (v2)</Form.Label>
-          <Form.Select
-            value={selectedEndpointIndex}
-            onChange={(e: any) => {
-              const parsedIndex = Number.parseInt(e.target.value);
-              if (!Number.isNaN(parsedIndex)) {
-                setSelectedEndpointIndex(Number.isNaN(parsedIndex) ? -1 : parsedIndex);
-                if (parsedIndex >= 0) {
-                  const newEndpoint = v2Api[parsedIndex];
-                  setEndpointUrl(newEndpoint.endpointUrl);
-                  setMethod(newEndpoint.method);
-                  setParams(newEndpoint.params);
-                  updateUrlParamsForEndpointUrl(newEndpoint.endpointUrl);
-                }
-              }
-            }}
-          >
-            <option value={-1}>Make a selection...</option>
-            {endpointOptionElements}
-          </Form.Select>
-          {selectedEndpoint && (
-            <Alert variant="info" className="mt-1 py-1">
-              {selectedEndpoint.description}
-            </Alert>
-          )}
-        </Form.Group>
-      </div>
-      <Stack gap={1}>
-        <Form.Group controlId="endpoint-url">
-          <Form.Label>Endpoint URL</Form.Label>
-          <CancelableFormControl
-            type="text"
-            placeholder="API endpoint e.g. /products"
-            value={endpointUrl || ''}
-            onChange={(e) => {
-              setEndpointUrl(e.target.value);
-              updateUrlParamsForEndpointUrl(e.target.value);
-            }}
-            onCancel={() => {
-              setEndpointUrl('');
-              updateUrlParamsForEndpointUrl('');
-            }}
-            className="font-monospace"
-          />
-        </Form.Group>
-        <Stack gap={1}>{urlParamElements}</Stack>
-      </Stack>
-      <Card>
-        <Card.Header className="d-flex align-items-center gap-2">
-          <div>Method</div>
-          <div>
-            <Badge bg="info" className="font-monospace">
-              {method}
-            </Badge>
-          </div>
-        </Card.Header>
-        <Card.Body>
-          <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
-            <ButtonGroup>
-              <Button
-                variant={method === 'GET' ? 'info' : 'secondary'}
-                className={method === 'GET' ? undefined : 'text-dark'}
-                onClick={() => setMethod('GET')}
-              >
-                GET
-              </Button>
-              <Button
-                variant={method === 'POST' ? 'info' : 'secondary'}
-                className={method === 'POST' ? undefined : 'text-dark'}
-                onClick={() => setMethod('POST')}
-              >
-                POST
-              </Button>
-              <Button
-                variant={method === 'PUT' ? 'info' : 'secondary'}
-                className={method === 'PUT' ? undefined : 'text-dark'}
-                onClick={() => setMethod('PUT')}
-              >
-                PUT
-              </Button>
-              <Button
-                variant={method === 'DELETE' ? 'info' : 'secondary'}
-                className={method === 'DELETE' ? undefined : 'text-dark'}
-                onClick={() => setMethod('DELETE')}
-              >
-                DELETE
-              </Button>
-            </ButtonGroup>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSend();
+      }}
+    >
+      <Stack gap={2}>
+        <div>
+          <Form.Group controlId="api-root-url">
+            <Form.Label>API Root URL</Form.Label>
             <CancelableFormControl
               type="text"
-              placeholder="GET, DELETE, PUT, POST, etc."
-              value={method || ''}
-              className="font-monospace"
-              style={{ width: 150 }}
-              onChange={(e) => setMethod(e.target.value)}
-              onCancel={() => setMethod('')}
+              placeholder="Root URL for the Gumroad API"
+              value={apiRoot || ''}
+              onChange={(e) => {
+                setAPIRoot(e.target.value);
+                if (typeof localStorage !== 'undefined') {
+                  localStorage['gumroadAPIRoot'] = e.target.value;
+                }
+              }}
+              onCancel={() => {
+                setAPIRoot('');
+                if (typeof localStorage !== 'undefined') {
+                  delete localStorage['gumroadAPIRoot'];
+                }
+              }}
             />
-          </div>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Header>Params</Card.Header>
-        <Card.Body>
-          <Stack gap={1}>
-            <Stack gap={1}>{apiParamElements}</Stack>
-            <div
-              className={combineClassNames(
-                'd-flex gap-1',
-                params.length > 0 ? 'justify-content-end' : 'justify-content-center',
-              )}
+          </Form.Group>
+        </div>
+        <div>
+          <Form.Group controlId="access-token">
+            <Form.Label>Access Token</Form.Label>
+            <CancelableFormControl
+              type="text"
+              placeholder="Paste access token here"
+              value={accessToken || ''}
+              required
+              onChange={(e) => {
+                setAccessToken(e.target.value);
+              }}
+              onCancel={() => {
+                setAccessToken('');
+              }}
+            />
+          </Form.Group>
+        </div>
+        <div>
+          <Form.Group controlId="selected-endpoint">
+            <Form.Label>Select An Endpoint (v2)</Form.Label>
+            <Form.Select
+              value={selectedEndpointIndex}
+              onChange={(e: any) => {
+                const parsedIndex = Number.parseInt(e.target.value);
+                if (!Number.isNaN(parsedIndex)) {
+                  setSelectedEndpointIndex(Number.isNaN(parsedIndex) ? -1 : parsedIndex);
+                  if (parsedIndex >= 0) {
+                    const newEndpoint = v2Api[parsedIndex];
+                    setEndpointUrl(newEndpoint.endpointUrl);
+                    setMethod(newEndpoint.method);
+                    setParams(newEndpoint.params);
+                    updateUrlParamsForEndpointUrl(newEndpoint.endpointUrl);
+                  }
+                }
+              }}
             >
-              <IconButton
-                icon={FaPlus}
-                variant="primary"
-                onClick={() => {
-                  setParams([...params, { k: '', v: '' }]);
-                }}
-              >
-                Add Param
-              </IconButton>
-              <Button
-                variant="danger"
-                onClick={() => {
-                  setParams([]);
-                }}
-                disabled={params.length === 0}
-              >
-                Delete All
-              </Button>
-            </div>
-          </Stack>
-        </Card.Body>
-      </Card>
-
-      <div className="d-flex justify-content-end align-items-center gap-2">
-        {errorMessage && <Badge bg="danger">Error</Badge>}
-        {status >= 0 && <Badge bg={`${status}`.startsWith('2') ? 'success' : 'danger'}>{statusLabel}</Badge>}
-        <Button variant="primary" onClick={handleSend} disabled={!accessToken}>
-          Send
-        </Button>
-      </div>
-      {errorMessage && (
-        <div>
-          <Alert variant="danger">
-            <p className="mb-0">{errorMessage}</p>
-          </Alert>
-        </div>
-      )}
-      {successMessage && (
-        <div>
-          <Alert variant="success">
-            <p className="mb-0">{successMessage}</p>
-          </Alert>
-        </div>
-      )}
-      {lastFetchMethod && lastFetchUrl && (
-        <div>
-          <Form.Label>Request Sent</Form.Label>
-          <div className="d-flex align-items-center gap-1">
-            <Badge bg="info" className="font-monospace">
-              {lastFetchMethod}
-            </Badge>
-            <Form.Control type="text" value={lastFetchUrl} readOnly />
-          </div>
-        </div>
-      )}
-      {responseJson && (
-        <div className="mt-3">
-          <Form.Group controlId="structured-response-group">
-            <Form.Label>Structured Response</Form.Label>
-            <div className="text-break">
-              <ReactJson src={responseJson} sortKeys displayDataTypes={false} />
-            </div>
+              <option value={-1}>Make a selection...</option>
+              {endpointOptionElements}
+            </Form.Select>
+            {selectedEndpoint && (
+              <Alert variant="info" className="mt-1 py-1">
+                {selectedEndpoint.description}
+              </Alert>
+            )}
           </Form.Group>
         </div>
-      )}
-      {response && (
-        <div className="mt-3">
-          <Form.Group controlId="raw-response-group">
-            <Form.Label>Raw Response</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="Raw response will display here"
-              rows={10}
-              value={response}
+        <Stack gap={1}>
+          <Form.Group controlId="endpoint-url">
+            <Form.Label>Endpoint URL</Form.Label>
+            <CancelableFormControl
+              type="text"
+              placeholder="API endpoint e.g. /products"
+              value={endpointUrl || ''}
+              required
+              onChange={(e) => {
+                setEndpointUrl(e.target.value);
+                updateUrlParamsForEndpointUrl(e.target.value);
+              }}
+              onCancel={() => {
+                setEndpointUrl('');
+                updateUrlParamsForEndpointUrl('');
+              }}
               className="font-monospace"
-              readOnly
             />
           </Form.Group>
+          <Stack gap={1}>{urlParamElements}</Stack>
+        </Stack>
+        <Accordion>
+          <AccordionItem eventKey="0">
+            <AccordionHeader>
+              <Stack direction="horizontal" gap={2}>
+                <div className="text-dark">Method</div>
+                <div>
+                  <Badge bg="info" className="font-monospace">
+                    {method}
+                  </Badge>
+                </div>
+              </Stack>
+            </AccordionHeader>
+            <AccordionBody>
+              <div className="d-flex flex-wrap align-items-center justify-content-center gap-2">
+                <ButtonGroup>
+                  <Button
+                    variant={method === 'GET' ? 'info' : 'secondary'}
+                    className={method === 'GET' ? undefined : 'text-dark'}
+                    onClick={() => setMethod('GET')}
+                  >
+                    GET
+                  </Button>
+                  <Button
+                    variant={method === 'POST' ? 'info' : 'secondary'}
+                    className={method === 'POST' ? undefined : 'text-dark'}
+                    onClick={() => setMethod('POST')}
+                  >
+                    POST
+                  </Button>
+                  <Button
+                    variant={method === 'PUT' ? 'info' : 'secondary'}
+                    className={method === 'PUT' ? undefined : 'text-dark'}
+                    onClick={() => setMethod('PUT')}
+                  >
+                    PUT
+                  </Button>
+                  <Button
+                    variant={method === 'DELETE' ? 'info' : 'secondary'}
+                    className={method === 'DELETE' ? undefined : 'text-dark'}
+                    onClick={() => setMethod('DELETE')}
+                  >
+                    DELETE
+                  </Button>
+                </ButtonGroup>
+                <CancelableFormControl
+                  type="text"
+                  placeholder="Enter method"
+                  value={method || ''}
+                  className="font-monospace"
+                  style={{ width: 150 }}
+                  required
+                  onChange={(e) => setMethod(e.target.value)}
+                  onCancel={() => setMethod('')}
+                />
+              </div>
+            </AccordionBody>
+          </AccordionItem>
+        </Accordion>
+        <Card>
+          <Card.Header>Params</Card.Header>
+          <Card.Body>
+            <Stack gap={1}>
+              <Stack gap={1}>{apiParamElements}</Stack>
+              <div
+                className={combineClassNames(
+                  'd-flex gap-1',
+                  params.length > 0 ? 'justify-content-end' : 'justify-content-center',
+                )}
+              >
+                <IconButton
+                  icon={FaPlus}
+                  variant="primary"
+                  onClick={() => {
+                    setParams([...params, { k: '', v: '' }]);
+                  }}
+                >
+                  Add Param
+                </IconButton>
+                {params.length > 0 && (
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      setParams([]);
+                    }}
+                  >
+                    Delete All
+                  </Button>
+                )}
+              </div>
+              {showEmptyParamsAlert && (
+                <Alert variant="info" className="py-1 my-2 small">
+                  Refer to the <a href="https://app.gumroad.com/api">docs</a> for param specifications. Some params are
+                  optional. Empty params will not be sent.
+                </Alert>
+              )}
+            </Stack>
+          </Card.Body>
+        </Card>
+
+        <div className="d-flex justify-content-end align-items-center gap-2">
+          {typeof wasSuccessful === 'boolean' && !wasSuccessful && <Badge bg="danger">Error</Badge>}
+          {typeof wasSuccessful === 'boolean' && wasSuccessful && <Badge bg="success">Success</Badge>}
+          {status >= 0 && <Badge bg={`${status}`.startsWith('2') ? 'info' : 'danger'}>{statusLabel}</Badge>}
+          <Button variant="secondary" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button variant="primary" type="submit" disabled={!sendButtonEnabled}>
+            Send
+          </Button>
         </div>
-      )}
-    </Stack>
+        {errorMessage && (
+          <div>
+            <Alert variant="danger">
+              <p className="mb-0">{errorMessage}</p>
+            </Alert>
+          </div>
+        )}
+        {successMessage && (
+          <div>
+            <Alert variant="success">
+              <p className="mb-0">{successMessage}</p>
+            </Alert>
+          </div>
+        )}
+        {lastFetchMethod && lastFetchUrl && (
+          <FadeInQuick key={`request-${fetchTime}`}>
+            <Form.Label>Request Sent</Form.Label>
+            <div className="d-flex align-items-center gap-1">
+              <Badge bg="info" className="font-monospace">
+                {lastFetchMethod}
+              </Badge>
+              <Form.Control type="text" value={lastFetchUrl} readOnly />
+            </div>
+          </FadeInQuick>
+        )}
+        {responseJson && (
+          <FadeInQuick key={`structured-response-${fetchTime}`} className="mt-3">
+            <Form.Group controlId="structured-response-group">
+              <Form.Label>Structured Response</Form.Label>
+              <div className="text-break">
+                <ReactJson src={responseJson} sortKeys displayDataTypes={false} />
+              </div>
+            </Form.Group>
+          </FadeInQuick>
+        )}
+        {response && (
+          <FadeInQuick key={`raw-response-${fetchTime}`} className="mt-3">
+            <Form.Group controlId="raw-response-group">
+              <Form.Label>Raw Response</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Raw response will display here"
+                rows={10}
+                value={response}
+                className="font-monospace"
+                readOnly
+              />
+            </Form.Group>
+          </FadeInQuick>
+        )}
+      </Stack>
+    </Form>
   );
 };
+
+const FadeInQuick = styled.div`
+  & {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.381s;
+  }
+
+  @keyframes fadeInOpacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
