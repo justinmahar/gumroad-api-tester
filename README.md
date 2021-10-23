@@ -32,6 +32,10 @@ When retrieving products, buy buttons are shown so that you can test product pur
 
 Try the `GET: /user` endpoint for a quick test of your access token.
 
+This project is [open sourced on GitHub](https://github.com/justinmahar/gumroad-api-tester-webapp) under the [MIT License](https://github.com/justinmahar/gumroad-api-tester-webapp#mit-license).
+
+🎉 Happy selling!
+
 **[Get started here.](https://justinmahar.github.io/gumroad-api-tester-webapp/)**
 
 ## Contributing
