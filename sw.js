@@ -26,7 +26,7 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-a57e26da1b15250ea6fd.js"
+    "url": "webpack-runtime-f96262720b3ccb61f943.js"
   },
   {
     "url": "framework-970e2cc72306129e7235.js"
@@ -35,11 +35,11 @@ self.__precacheManifest = [
     "url": "styles.34e4a4d9c49b8bcd20f2.css"
   },
   {
-    "url": "app-d05a498b7b7810a91d37.js"
+    "url": "app-df39169c53d0859e8803.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "9527ec5bd64c066a430dfae8e02863cd"
+    "revision": "4479a96c065c1c744461b86b56d7a1e9"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-7a6bf32ff83a3066df58.js"
@@ -50,7 +50,7 @@ self.__precacheManifest = [
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "1bf4b6dadea077a566b3aa284e35aff1"
+    "revision": "5dae74c3ac6ad6bbab0ac268b3281cf2"
   },
   {
     "url": "polyfill-628efea4784bb13157c2.js"
@@ -149,7 +149,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/gumroad-api-tester-webapp/app-d05a498b7b7810a91d37.js`))) {
+  if (!resources || !(await caches.match(`/gumroad-api-tester-webapp/app-df39169c53d0859e8803.js`))) {
     return await fetch(event.request)
   }
 
