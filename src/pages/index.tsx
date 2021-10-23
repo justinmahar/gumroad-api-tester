@@ -81,6 +81,12 @@ export default function Index(props: IndexProps): JSX.Element {
                     Try the <code className="px-1 border border-light rounded-2">GET: /user</code> endpoint for a quick
                     test of your access token.
                   </p>
+                  <p>
+                    This project is{' '}
+                    <a href="https://github.com/justinmahar/gumroad-api-tester-webapp">open sourced on GitHub</a> under
+                    the <a href="https://github.com/justinmahar/gumroad-api-tester-webapp#mit-license">MIT License</a>.
+                  </p>
+                  <p>🎉 Happy selling!</p>
                 </Alert>
               )}
               <GumroadAPIWidget />

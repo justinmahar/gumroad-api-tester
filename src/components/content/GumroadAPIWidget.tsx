@@ -24,7 +24,7 @@ const API_ROOT_DEFAULT = 'https://api.gumroad.com/v2';
 
 export const GumroadAPIWidget = (props: Props) => {
   const [apiRoot, setAPIRoot] = useLocalStorageString('gumroadAPIRoot', API_ROOT_DEFAULT);
-  const [accessToken, setAccessToken] = useLocalStorageString('gumroadAccessToken', '');
+  const [accessToken, setAccessToken] = React.useState('');
   const [endpointUrl, setEndpointUrl] = useLocalStorageString('gumroadEndpointUrl', '');
   const [method, setMethod] = useLocalStorageString('gumroadMethod', 'GET');
   const [urlParams, setUrlParams] = useLocalStorageObject('gumroadUrlParams', []);
@@ -43,7 +43,6 @@ export const GumroadAPIWidget = (props: Props) => {
   const [lastFetchMethod, setLastFetchMethod] = React.useState('');
   const [lastFetchUrl, setLastFetchUrl] = React.useState('');
 
-  const [pastedAccessToken, setPastedAccessToken] = React.useState('');
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = React.useState(false);
 
   let statusLabel = `${status}`;
@@ -196,19 +195,12 @@ export const GumroadAPIWidget = (props: Props) => {
         navigator.clipboard
           .readText()
           .then((text) => {
-            setPastedAccessToken(text);
+            setAccessToken(text);
           })
           .catch((e) => console.error(e));
       }
     });
   };
-
-  React.useEffect(() => {
-    if (pastedAccessToken) {
-      setPastedAccessToken('');
-      setAccessToken(pastedAccessToken);
-    }
-  }, [pastedAccessToken]);
 
   const updateUrlParamsForEndpointUrl = (newEndpointUrl: string) => {
     if (newEndpointUrl) {
@@ -425,7 +417,6 @@ export const GumroadAPIWidget = (props: Props) => {
                   type="text"
                   placeholder="Paste access token here"
                   value={accessToken || ''}
-                  inputStyle={{ background: !accessToken ? 'rgb(255, 230, 230)' : 'rgb(240, 240, 255)' }}
                   required
                   onChange={(e) => {
                     setAccessToken(e.target.value);
@@ -433,6 +424,7 @@ export const GumroadAPIWidget = (props: Props) => {
                   onCancel={() => {
                     setAccessToken('');
                   }}
+                  autoComplete="off"
                 />
                 <IconButton icon={FaPaste} variant="secondary" onClick={handlePasteAccessToken} />
               </Stack>

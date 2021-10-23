@@ -24,10 +24,7 @@ export default function Footer(props: FooterProps): JSX.Element {
                   Justin Mahar
                 </a>
                 .{' '}
-                <a
-                  href="https://raw.githubusercontent.com/justinmahar/gumroad-api-tester-webapp/master/LICENSE"
-                  className="text-reset"
-                >
+                <a href="https://github.com/justinmahar/gumroad-api-tester-webapp#mit-license" className="text-reset">
                   MIT License
                 </a>
                 . Logo by{' '}
