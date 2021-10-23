@@ -1,7 +1,7 @@
 {
   "name": "gumroad-api-tester-webapp",
   "description": "A webapp for easily testing the Gumroad API.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "homepage": "https://justinmahar.github.io/gumroad-api-tester-webapp/",
   "dependencies": {
