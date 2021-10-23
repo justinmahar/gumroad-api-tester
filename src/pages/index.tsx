@@ -26,7 +26,9 @@ export default function Index(props: IndexProps): JSX.Element {
 
   return (
     <Layout>
-      <Head seo={{ title: pageTitle, description: description }} />
+      <Head seo={{ title: pageTitle, description: description }}>
+        <script src="https://gumroad.com/js/gumroad.js"></script>
+      </Head>
       <Body>
         <Container>
           <Row className="mb-5">

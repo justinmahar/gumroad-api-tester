@@ -15,6 +15,7 @@ import { Param, RESTEndpoint, v2Api } from './v2api';
 import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
 import { FaPaste } from '@react-icons/all-files/fa/FaPaste';
 import { ImArrowRight } from '@react-icons/all-files/im/ImArrowRight';
+import { ContextualResults } from './ContextualResults';
 
 interface Props {}
 
@@ -199,9 +200,10 @@ export const GumroadAPIWidget = (props: Props) => {
 
   React.useEffect(() => {
     if (pastedAccessToken) {
+      setPastedAccessToken('');
       setAccessToken(pastedAccessToken);
     }
-  }, [pastedAccessToken, setAccessToken]);
+  }, [pastedAccessToken]);
 
   const updateUrlParamsForEndpointUrl = (newEndpointUrl: string) => {
     if (newEndpointUrl) {
@@ -565,6 +567,11 @@ export const GumroadAPIWidget = (props: Props) => {
               </Badge>
               <Form.Control type="text" value={lastFetchUrl} readOnly />
             </div>
+          </FadeInQuick>
+        )}
+        {responseJson && (
+          <FadeInQuick key={`contextual-results-${fetchTime}`}>
+            <ContextualResults json={responseJson} className="mt-3" />
           </FadeInQuick>
         )}
         {responseJson && (
