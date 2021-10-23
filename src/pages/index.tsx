@@ -72,6 +72,10 @@ export default function Index(props: IndexProps): JSX.Element {
                     Some parameters are optional&mdash;be sure to reference the{' '}
                     <a href="https://app.gumroad.com/api">API docs</a> when in doubt.
                   </p>
+                  <p>
+                    When retrieving products, buy buttons are shown so that you can test product purchases right from
+                    within this testing tool.
+                  </p>
                 </Alert>
               )}
               <GumroadAPIWidget />
