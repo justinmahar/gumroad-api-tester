@@ -1,6 +1,6 @@
 siteMetadata:
   siteName: Gumroad API Tester
-  siteUrl: 'https://justinmahar.github.io/gumroad-api-tester-webapp/'
+  siteUrl: 'https://justinmahar.github.io/gumroad-api-tester-webapp'
   siteDescription: A webapp for easily testing the Gumroad API.
   siteIcon: /media/site-icon.png
   siteIconAlt: Cyclone
