@@ -145,5 +145,6 @@ export default {
     ...settings.siteMetadata,
   },
   plugins: plugins,
+  // https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/how-gatsby-works-with-github-pages/#deploying-to-a-path-on-github-pages
   pathPrefix: '/gumroad-api-tester-webapp',
 };
