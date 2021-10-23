@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code, run tests, and deploy
+# This workflow will do a clean install of node dependencies, build the source code, and deploy
 # the Gatsby site to GitHub Pages. For more info see: https://github.com/JamesIves/github-pages-deploy-action
 # IMPORTANT: You must have an ACCESS_TOKEN secret for the repo. Two steps:
 # 1) Create a personal access token with repo access: https://github.com/settings/tokens
@@ -22,7 +22,6 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install
-          npm run test
           npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
