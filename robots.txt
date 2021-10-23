@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://justinmahar.github.io/sitemap/sitemap-index.xml
+Host: https://justinmahar.github.io
