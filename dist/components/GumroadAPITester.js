@@ -8,25 +8,14 @@ require("bootstrap/dist/css/bootstrap.css");
 require("bootswatch/dist/zephyr/bootstrap.min.css");
 const react_1 = __importDefault(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
-const react_helmet_1 = require("react-helmet");
 const fa_1 = require("react-icons/fa");
 const react_use_window_localstorage_1 = require("react-use-window-localstorage");
 const GumroadAPIWidget_1 = require("./content/GumroadAPIWidget");
 const IconButton_1 = require("./content/IconButton");
-let apiScriptLoaded = false;
 function GumroadAPITester(props) {
     const [showInformationModal, setShowInformationModal, showInformationModalLoading] = (0, react_use_window_localstorage_1.useLocalStorageBoolean)('showInformationModal', true);
     const handleCloseInformationModal = () => setShowInformationModal(false);
-    const [shouldLoadScript, setShouldLoadScript] = react_1.default.useState(false);
-    react_1.default.useEffect(() => {
-        if (!apiScriptLoaded) {
-            setShouldLoadScript(true);
-            apiScriptLoaded = true;
-        }
-    }, []);
     return (react_1.default.createElement("div", null,
-        shouldLoadScript && (react_1.default.createElement(react_helmet_1.Helmet, null,
-            react_1.default.createElement("script", { src: "https://gumroad.com/js/gumroad.js" }))),
         react_1.default.createElement("div", { className: "py-3" },
             react_1.default.createElement(react_bootstrap_1.Container, null,
                 react_1.default.createElement(react_bootstrap_1.Row, { className: "mb-5" },
@@ -55,7 +44,7 @@ function GumroadAPITester(props) {
                                 ' ',
                                 react_1.default.createElement("a", { href: "https://app.gumroad.com/api" }, "API docs"),
                                 " when in doubt."),
-                            react_1.default.createElement("p", null, "When retrieving products, buy buttons are shown so that you can test product purchases right from within this testing tool."),
+                            react_1.default.createElement("p", null, "When retrieving products, buy links are shown so that you can test product purchases right from within this testing tool."),
                             react_1.default.createElement("p", null,
                                 "Try the ",
                                 react_1.default.createElement("code", { className: "px-1 border border-light rounded-2" }, "GET: /user"),
