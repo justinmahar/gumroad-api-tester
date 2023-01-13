@@ -11,10 +11,10 @@ exports.Tester = void 0;
  * More on argTypes: https://storybook.js.org/docs/react/api/argtypes
  */
 const react_1 = __importDefault(require("react"));
-const GumroadAPITester_1 = __importDefault(require("../components/GumroadAPITester"));
+const GumroadAPITester_1 = require("../components/GumroadAPITester");
 exports.default = {
     title: 'Tools/Gumroad API',
-    component: GumroadAPITester_1.default,
+    component: GumroadAPITester_1.GumroadAPITester,
     parameters: {
         controls: {
             disabled: true,
@@ -22,7 +22,7 @@ exports.default = {
         options: { showPanel: false },
     },
 };
-const Template = (args) => react_1.default.createElement(GumroadAPITester_1.default, Object.assign({}, args));
+const Template = (args) => react_1.default.createElement(GumroadAPITester_1.GumroadAPITester, Object.assign({}, args));
 exports.Tester = Template.bind({});
 exports.Tester.args = {};
 exports.Tester.story = {

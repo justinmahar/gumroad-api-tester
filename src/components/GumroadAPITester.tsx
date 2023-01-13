@@ -8,13 +8,13 @@ import { useLocalStorageBoolean } from 'react-use-window-localstorage';
 import { GumroadAPIWidget } from './content/GumroadAPIWidget';
 import { IconButton } from './content/IconButton';
 
-interface IndexProps {
+export interface GumroadAPITesterProps {
   data: any;
 }
 
 let apiScriptLoaded = false;
 
-export default function GumroadAPITester(props: IndexProps): JSX.Element {
+export function GumroadAPITester(props: GumroadAPITesterProps): JSX.Element {
   const [showInformationModal, setShowInformationModal, showInformationModalLoading] = useLocalStorageBoolean(
     'showInformationModal',
     true,

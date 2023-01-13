@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GumroadAPITester = void 0;
 require("bootstrap/dist/css/bootstrap.css");
 require("bootswatch/dist/zephyr/bootstrap.min.css");
 const react_1 = __importDefault(require("react"));
@@ -13,7 +14,7 @@ const react_use_window_localstorage_1 = require("react-use-window-localstorage")
 const GumroadAPIWidget_1 = require("./content/GumroadAPIWidget");
 const IconButton_1 = require("./content/IconButton");
 let apiScriptLoaded = false;
-function GumroadAPITester(props) {
+const GumroadAPITester = (props) => {
     const [showInformationModal, setShowInformationModal, showInformationModalLoading] = (0, react_use_window_localstorage_1.useLocalStorageBoolean)('showInformationModal', true);
     const handleCloseInformationModal = () => setShowInformationModal(false);
     const [shouldLoadScript, setShouldLoadScript] = react_1.default.useState(false);
@@ -68,5 +69,5 @@ function GumroadAPITester(props) {
                             ' ',
                             react_1.default.createElement("a", { href: "https://github.com/justinmahar/gumroad-api-tester-webapp" }, "Star it on GitHub"),
                             " so others can find it. :)")))))));
-}
-exports.default = GumroadAPITester;
+};
+exports.GumroadAPITester = GumroadAPITester;

@@ -7,7 +7,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import GumroadAPITester from '../components/GumroadAPITester';
+import { GumroadAPITester } from '../components/GumroadAPITester';
 
 export default {
   title: 'Tools/Gumroad API',
