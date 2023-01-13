@@ -35,7 +35,7 @@ This project is [open sourced on GitHub](https://github.com/justinmahar/gumroad-
 
 🎉 Happy selling!
 
-**[Get started here.](https://justinmahar.github.io/gumroad-api-tester/?path=/story/tools-gumroad-api--tester)**
+**[→ Get started here ←](https://justinmahar.github.io/gumroad-api-tester/?path=/story/tools-gumroad-api--tester)**
 
 ### Features include:
 
@@ -65,6 +65,59 @@ Your support helps keep the project going and will earn you some serious virtual
 </a>
 
 [/lock:donate]::---------------------------------------🚫
+
+## Table of Contents
+
+- [Get Started](#get-started)
+- [Documentation](#documentation)
+- [Overview](#overview)
+  - [Features include:](#features-include)
+- [Donate](#donate)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Via Website](#via-website)
+  - [Via `npm`](#via-npm)
+- [TypeScript](#typescript)
+- [Icon Attribution](#icon-attribution)
+- [Contributing](#contributing)
+- [⭐ Found It Helpful? Star It!](#-found-it-helpful-star-it)
+- [License](#license)
+
+
+## Installation
+
+```
+npm i gumroad-api-tester
+```
+
+## Usage
+
+### Via Website
+
+Go here: **[Gumroad API Tester](https://justinmahar.github.io/gumroad-api-tester/?path=/story/tools-gumroad-api--tester)**
+
+### Via `npm`
+
+If you want to use the widget yourself, you can install this package via npm and use the exported `GumroadAPIWidget`.
+
+```jsx
+import { GumroadAPIWidget } from 'gumroad-api-tester';
+```
+
+```jsx
+<GumroadAPIWidget />
+```
+
+> Note: The API widget depends on [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/) via [react-bootstrap](https://react-bootstrap.github.io/). You must import the Bootstrap styles yourself. For additional styling, I am using the [Zephyr swatch](https://bootswatch.com/zephyr/) from [Bootswatch](https://bootswatch.com/).
+
+[lock:typescript]::🚫---------------------------------------
+
+## TypeScript
+
+Type definitions have been included for [TypeScript](https://www.typescriptlang.org/) support.
+
+[/lock:typescript]::---------------------------------------🚫
 
 [lock:icon]::🚫---------------------------------------
 
