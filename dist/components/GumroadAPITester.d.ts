@@ -1,8 +1,7 @@
 /// <reference types="react" />
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootswatch/dist/zephyr/bootstrap.min.css';
-interface IndexProps {
+export interface GumroadAPITesterProps {
     data: any;
 }
-export declare const GumroadAPITester: (props: IndexProps) => JSX.Element;
-export {};
+export declare function GumroadAPITester(props: GumroadAPITesterProps): JSX.Element;

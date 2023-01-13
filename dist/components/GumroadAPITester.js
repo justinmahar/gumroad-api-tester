@@ -14,7 +14,7 @@ const react_use_window_localstorage_1 = require("react-use-window-localstorage")
 const GumroadAPIWidget_1 = require("./content/GumroadAPIWidget");
 const IconButton_1 = require("./content/IconButton");
 let apiScriptLoaded = false;
-const GumroadAPITester = (props) => {
+function GumroadAPITester(props) {
     const [showInformationModal, setShowInformationModal, showInformationModalLoading] = (0, react_use_window_localstorage_1.useLocalStorageBoolean)('showInformationModal', true);
     const handleCloseInformationModal = () => setShowInformationModal(false);
     const [shouldLoadScript, setShouldLoadScript] = react_1.default.useState(false);
@@ -69,5 +69,5 @@ const GumroadAPITester = (props) => {
                             ' ',
                             react_1.default.createElement("a", { href: "https://github.com/justinmahar/gumroad-api-tester-webapp" }, "Star it on GitHub"),
                             " so others can find it. :)")))))));
-};
+}
 exports.GumroadAPITester = GumroadAPITester;
