@@ -1,7 +1,6 @@
-import { IconType } from '@react-icons/all-files';
-import { IconBaseProps } from '@react-icons/all-files/lib';
 import React from 'react';
 import { Button, ButtonProps } from 'react-bootstrap';
+import { IconBaseProps, IconType } from 'react-icons';
 import { combineClassNames } from '../component-utils';
 
 interface IconButtonProps extends ButtonProps {

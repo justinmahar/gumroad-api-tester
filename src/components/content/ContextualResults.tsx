@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from 'react-bootstrap';
-import { FaExternalLinkAlt } from '@react-icons/all-files/fa/FaExternalLinkAlt';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { IconButton } from './IconButton';
 import { DivProps, DivPropsWithoutRef } from 'react-html-props';
 

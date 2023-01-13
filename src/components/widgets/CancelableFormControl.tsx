@@ -1,4 +1,4 @@
-import { FaTimesCircle } from '@react-icons/all-files/fa/FaTimesCircle';
+import { FaTimesCircle } from 'react-icons/fa';
 import React, { KeyboardEvent } from 'react';
 import { Form, FormControlProps } from 'react-bootstrap';
 import { InputProps } from 'react-html-props';
