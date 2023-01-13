@@ -12,8 +12,6 @@ export interface GumroadAPITesterProps {
   data: any;
 }
 
-let apiScriptLoaded = false;
-
 export function GumroadAPITester(props: GumroadAPITesterProps): JSX.Element {
   const [showInformationModal, setShowInformationModal, showInformationModalLoading] = useLocalStorageBoolean(
     'showInformationModal',
@@ -21,22 +19,8 @@ export function GumroadAPITester(props: GumroadAPITesterProps): JSX.Element {
   );
   const handleCloseInformationModal = () => setShowInformationModal(false);
 
-  const [shouldLoadScript, setShouldLoadScript] = React.useState(false);
-
-  React.useEffect(() => {
-    if (!apiScriptLoaded) {
-      setShouldLoadScript(true);
-      apiScriptLoaded = true;
-    }
-  }, []);
-
   return (
     <div>
-      {shouldLoadScript && (
-        <Helmet>
-          <script src="https://gumroad.com/js/gumroad.js" />
-        </Helmet>
-      )}
       <div className="py-3">
         <Container>
           <Row className="mb-5">
@@ -81,7 +65,7 @@ export function GumroadAPITester(props: GumroadAPITesterProps): JSX.Element {
                     <a href="https://app.gumroad.com/api">API docs</a> when in doubt.
                   </p>
                   <p>
-                    When retrieving products, buy buttons are shown so that you can test product purchases right from
+                    When retrieving products, buy links are shown so that you can test product purchases right from
                     within this testing tool.
                   </p>
                   <p>
