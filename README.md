@@ -27,7 +27,7 @@ Using this tool, you can test out the [Gumroad API](https://app.gumroad.com/api)
 
 All v2 endpoints are available for quick selection, or you can manually enter things if you'd like. Some parameters are optional—be sure to reference the [API docs](https://app.gumroad.com/api) when in doubt.
 
-When retrieving products, buy buttons are shown so that you can test product purchases right from within this testing tool.
+When retrieving products, buy links are shown so that you can test product purchases right from within this testing tool.
 
 Try the `GET: /user` endpoint for a quick test of your access token.
 
