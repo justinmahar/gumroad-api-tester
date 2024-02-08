@@ -1,29 +1,19 @@
-/*
- * More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
- * More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
- * More on args: https://storybook.js.org/docs/react/writing-stories/args
- * More on argTypes: https://storybook.js.org/docs/react/api/argtypes
- */
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import { GumroadAPITester } from '../components/GumroadAPITester';
 
-export default {
-  title: 'Tools/Gumroad API',
-  component: GumroadAPITester,
+// === Setup ===
+const StoryComponent = GumroadAPITester; // <-- Set to your component
+const meta: Meta<typeof StoryComponent> = {
+  title: 'Tools/Gumroad API', // <-- Set to your story title
+  component: StoryComponent,
   parameters: {
-    controls: {
-      disabled: true,
-    },
-    options: { showPanel: false },
+    options: { showPanel: false }, // Don't show addons panel
   },
-} as ComponentMeta<typeof GumroadAPITester>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: ComponentStory<typeof GumroadAPITester> = (args) => <GumroadAPITester {...args} />;
-
-export const Tester = Template.bind({});
-Tester.args = {};
-Tester.story = {
-  name: 'Tester',
+// === Stories ===
+export const Tester: Story = {
+  args: {},
 };
