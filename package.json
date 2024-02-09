@@ -1,7 +1,7 @@
 {
   "name": "gumroad-api-tester",
   "version": "1.1.10",
-  "coreVersion": "3.0.7",
+  "coreVersion": "3.0.9",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "description": "A web tool for easily testing the Gumroad API.",
   "homepage": "https://justinmahar.github.io/gumroad-api-tester/",
@@ -56,7 +56,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint": "^8.56.0",
-    "lockblocks": "^1.1.4",
+    "lockblocks": "^1.1.8",
     "prettier": "^3.2.5",
     "react-dom": "^18.2.0",
     "react-html-props": "^2.0.3",
